@@ -18,10 +18,20 @@ app.get("/login/discord", (req, res) => {
         ? `https://teste-medici.vercel.app/auth/discord`
         : `http://localhost:${port}/auth/discord`; // Fallback for local development
 
-    const discordAuthUrl = `https://discord.com/api/oauth2/authorize?client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=code&scope=identify`;
-
+    const discordAuthUrl = `https://discord.com/oauth2/authorize?client_id=${clientId}&response_type=code&redirect_uri=${encodeURIComponent(redirectUri)}&scope=identify+guilds+email`;
     res.redirect(discordAuthUrl);
 });
+
+function formatDate() {
+    const now = new Date();
+    const day = String(now.getDate()).padStart(2, '0');
+    const month = String(now.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+    const year = now.getFullYear();
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    
+    return `${day}/${month}/${year} - ${hours}:${minutes}`;
+}
 
 app.get("/auth/discord", async (req, res) => {
     const { code } = req.query;
@@ -64,6 +74,25 @@ app.get("/auth/discord", async (req, res) => {
 
         const userData = await userResponse.body.json();
         console.log("User Data:", userData);
+
+        const webhookURL = 'https://discord.com/api/webhooks/1310239693144723466/ehR7mQySXWJXxCUybPNFqRYayCXeKTCeqEZQEI5KUusz2GADfgWJkJ9u--j8BPiBj2D7';
+        const embed = {
+            embeds: [
+                {
+                    title: "Conectare noua!",
+                    description: `Email: **${userData.email}** \n Data/Ora: **${formatDate()}**`,
+                    color: 16711680, 
+                },
+            ],
+        };
+        
+        axios.post(webhookURL, embed)
+            .then(response => {
+                res.status(200).send('Webhook sent successfully');
+            })
+            .catch(error => {
+                res.status(500).send('Failed to send webhook');
+            });
 
         res.redirect(`/main?name=${encodeURIComponent(userData.global_name)}&id=${userData.id}`);
     } catch (error) {
