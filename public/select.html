@@ -126,6 +126,7 @@
                     boxShadow: "none",
                 },
             }).showToast();
+            localStorage.setItem('sent', 'true');
         } catch (error) {
             console.error('Error sending webhook:', error);
             Toastify({
@@ -142,7 +143,6 @@
         }
 
 
-        localStorage.setItem('sent', 'true');
     }
 
 
