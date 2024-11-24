@@ -9,14 +9,13 @@ const tests = [];
 const cors = require("cors");
 
 const corsOptions = {
-    origin: ["http://localhost:5000", "https://teste-medici.vercel.app/"], // Add allowed origins here
+    origin: ["http://localhost:5000", "https://teste-medici.vercel.app", "https://teste-medici-fplayt.vercel.app"],
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     allowedHeaders: ["Content-Type", "Authorization"],
 };
 
 app.use(cors(corsOptions));
 app.options("*", cors(corsOptions));
-
 app.use(express.static(path.join(__dirname, "..", "public")));
 app.use(express.json());
 app.get("/", (req, res) => {
