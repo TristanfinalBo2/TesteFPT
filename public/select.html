@@ -149,7 +149,7 @@
 
     setInterval(() => {
         let sent = localStorage.getItem('sent') === "true";
-        cd = parseInt(localStorage.getItem('cd')) || 60000;
+        cd = parseInt(localStorage.getItem('cd')) || 15000;
 
         if (sent) {
             cd -= 1000;
