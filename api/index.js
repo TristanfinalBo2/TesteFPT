@@ -15,7 +15,7 @@ const port = 5000;
 
 app.get("/login/discord", (req, res) => {
     const redirectUri = process.env.VERCEL_URL
-        ? `https://teste-medici-fplayt.vercel.app/auth/discord`
+        ? `https://teste-medici.vercel.app/auth/discord`
         : `http://localhost:${port}/auth/discord`; // Fallback for local development
 
     const discordAuthUrl = `https://discord.com/api/oauth2/authorize?client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=code&scope=identify`;
@@ -31,7 +31,7 @@ app.get("/auth/discord", async (req, res) => {
     }
 
     const redirectUri = process.env.VERCEL_URL
-        ? `https://teste-medici-fplayt.vercel.app/auth/discord`
+        ? `https://teste-medici.vercel.app/auth/discord`
         : `http://localhost:${port}/auth/discord`;
 
     try {
