@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste Departament</title>
+    <script src="http://code.jquery.com/jquery.min.js"></script>
+    <script src="http://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="http://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <div class="body-wrapper">
+        <span class="title">Departamentul Medical FPlayT</span>
+        <div class="test-wrapper">
+            <span class="header" id="testType"></span>
+            <div class="test-stats">
+                <span>Întrebarea <span class="gradient question-index">01/16</span></span>
+                <span>Timp rămas: <span class="gradient" id="timp">0m 0s</span></span>
+                <span>Greșeli: <span class="gradient mistakes-count">0/3</span></span>
+            </div>
+            <span class="question">Ce medicament administrezi unui pacient aflat în stare de anemie?</span>
+            <div class="test-options">
+            </div>
+            <div class="test-buttons">
+                <div class="button send-answer">
+                    <span>TRIMITE RĂSPUNSUL</span>
+                </div>
+                <div class="button answer-later">
+                    <span>RĂSPUND MAI TÂRZIU</span>
+                </div>
+                <div class="button clear-answer">
+                    <span>ȘTERGE RĂSPUNSUL</span>
+                </div>
+            </div>
+        </div>
+        <div class="test-result" style="display:none;">
+            <span></span>
+            <div class="button" onclick="redirectMain()">
+                <span>PAGINA PRINCIPALĂ</span>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script src="/script.js"></script>
+<script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const testType = urlParams.get('testType');
+    const code = urlParams.get('code');
+    const discordId = urlParams.get('discordId');
+    const name = urlParams.get('name')
+    document.getElementById("testType").textContent = `Test ${testType}`;
+    function redirectMain() {
+        window.location.href = `/main?name=${name}&id=${discordId}`;
+    }
+</script>
+</html>

@@ -1,0 +1,684 @@
+@font-face {font-family: Gilroy-ExtraBold; src: url(./assets/font/Gilroy-ExtraBold.ttf)}
+@font-face {font-family: Gilroy-Bold; src: url(./assets/font/Gilroy-Bold.ttf)}
+@font-face {font-family: Gilroy-SemiBold; src: url(./assets/font/Gilroy-SemiBold.ttf)}
+@font-face {font-family: Gilroy-Medium; src: url(./assets/font/Gilroy-Medium.ttf)}
+
+*{
+    margin: 0;
+    padding: 0;
+    user-select: none;
+}
+
+body{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: url(./assets/bg.png);
+    background-size: 115%;
+    background-position: 45%;
+    background-repeat: no-repeat;
+    backdrop-filter: blur(5px);
+}
+
+.body-wrapper{
+    width: 65%;
+    height: 70%;
+    background: rgba(39, 39, 39, 0.75);
+    border: .1vw solid rgba(255, 255, 255, 0.18);
+    box-shadow: 0px .2vw .2vw rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(.3vw);
+    border-radius: .7vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 1% 2%;
+}
+
+.body-wrapper .title{
+    font-family: Gilroy-Bold;
+    font-size: 1.6vw;
+    background: linear-gradient(90deg, #D8630F 0%, #F59318 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-fill-color: transparent;
+}
+
+.body-wrapper .test-wrapper{
+    width: 100%;
+    height: 96%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5%;
+}
+
+.body-wrapper .test-wrapper .header{
+    margin-top: .5%;
+    font-family: Gilroy-Medium;
+    color: white;
+    font-size: 1.2vw;
+}
+
+.body-wrapper .test-wrapper .test-stats{
+    margin-top: 4%;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.body-wrapper .test-wrapper .test-stats span{
+    width: 100%;
+    text-align: center;
+    font-family: Gilroy-SemiBold;
+    font-size: 1.1vw;
+    color: white;
+}
+
+.body-wrapper .test-wrapper .test-stats .gradient{
+    background: linear-gradient(90deg, #D8630F 0%, #F59318 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-fill-color: transparent;
+}
+
+.body-wrapper .test-wrapper span.question{
+    margin-top: 2%;
+    font-family: Gilroy-Bold;
+    color: white;
+    font-size: 1.2vw;
+}
+
+.body-wrapper .test-wrapper .test-options{
+    margin-top: -2%;
+    width: 100%;
+    height: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2%;
+}
+
+.body-wrapper .test-wrapper .test-options .option{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 1.2% 1%;
+    transition: .3s ease;
+    position: relative;
+    gap: 1%;
+    cursor: pointer;
+}
+
+.body-wrapper .test-wrapper .test-options .option::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: .3vw;
+    border: .1vw solid transparent;
+    background: linear-gradient(90deg, #62605F, #6f6a6400) border-box;
+    -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: destination-out;
+    mask-composite: exclude;
+}
+
+.body-wrapper .test-wrapper .test-options .option:hover::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: .3vw;
+    border: .1vw solid transparent;
+    background: linear-gradient(90deg, #D8630F, #f5921800) border-box;
+    -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: destination-out;
+    mask-composite: exclude;
+}
+
+.body-wrapper .test-wrapper .test-options .option .ball{
+    width: .9vw;
+    height: .9vw;
+    border-radius: 50%;
+    background-color: #515550;
+    border: .2vw solid #434643;
+    position: relative;
+}
+
+.body-wrapper .test-wrapper .test-options .option .ball.active{
+    width: 1.2vw;
+    height: 1.2vw;
+    border: none;
+    background: linear-gradient(90deg, #F59318 0%, #D8630F 100%);
+}
+
+.body-wrapper .test-wrapper .test-options .option .ball.active::before{
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: .2vw solid transparent;
+    background: linear-gradient(90deg, #D8630F, #F59318) border-box;
+    -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: destination-out;
+    mask-composite: exclude;
+}
+
+.body-wrapper .test-wrapper .test-options .option span{
+    font-family: Gilroy-Medium;
+    color: white;
+    font-size: .8vw;
+}
+
+.body-wrapper .test-wrapper .test-buttons{
+    width: 100%;
+    height: 10%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5%;
+    margin-top: -2%;
+}
+
+.body-wrapper .test-wrapper .test-buttons .button{
+    width: 27%;
+    height: 100%;
+    border-radius: .6vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-family: Gilroy-ExtraBold;
+    font-size: 1vw;
+    cursor: pointer;
+}
+
+.body-wrapper .test-wrapper .test-buttons .button:nth-child(1) {
+    background: linear-gradient(90deg, #D8630F 0%, #F59318 100%);
+}
+
+.body-wrapper .test-wrapper .test-buttons .button:nth-child(2) {
+    box-sizing: border-box;
+    background-color: transparent;
+    border: .15vw solid #FFFFFF;
+}
+
+.body-wrapper .test-wrapper .test-buttons .button:nth-child(3) {
+    background: linear-gradient(90deg, #D80F0F 0%, #FF2727 100%);
+}
+
+.body-wrapper .test-result{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 2vw;
+    font-family: Gilroy-Bold;
+    display: flex;
+    flex-direction: column;
+    gap: 5%;
+}
+
+.body-wrapper .test-result span{
+    width: 75%;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.body-wrapper .test-result .button{
+    background: linear-gradient(90deg, #D8630F 0%, #F59318 100%);
+    width: 25%;
+    height: 10%;
+    border-radius: .6vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-family: Gilroy-ExtraBold;
+    font-size: 1vw;
+    cursor: pointer;
+}
+
+.body-wrapper .discord-connect-wrapper{
+    width: 100%;
+    height: 96%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3%;
+}
+
+.body-wrapper .discord-connect-wrapper span{
+    color: white;
+    font-family: Gilroy-ExtraBold;
+    font-size: 1.3vw;
+    width: 50%;
+    text-align: center;
+}
+
+.body-wrapper .discord-connect-wrapper .button{
+    background: linear-gradient(90deg, #0F5FD8 0%, #183DF5 100%);
+    border-radius: .5vw;
+    width: 27%;
+    height: 10%;
+    display: flex;
+    flex-direction: row;
+    gap: 2%;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.body-wrapper .discord-connect-wrapper .button i {
+    color: white;
+    font-size: 1.2vw;
+}
+
+.body-wrapper .discord-connect-wrapper .button a{
+    font-size: .9vw;
+    width: fit-content;
+    text-decoration: none;
+    color: white;
+    font-family: Gilroy-ExtraBold;
+}
+
+.body-wrapper .select-test-wrapper{
+    width: 100%;
+    height: 96%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2%;
+    box-sizing: border-box;
+    padding-top: 5%;
+}
+
+.body-wrapper .select-test-wrapper .discord-user{
+    width: 100%;
+    font-family: Gilroy-Medium;
+    color: white;
+    text-align: left;
+    font-size: 1vw;
+}
+
+.body-wrapper .select-test-wrapper .select-text{
+    font-family: Gilroy-SemiBold;
+    color: white;
+    font-size: 1.4vw;
+    margin-top: 5%;
+}
+
+.body-wrapper .select-test-wrapper .select-buttons{
+    width: 100%;
+    height: 30%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2%; 
+    justify-content: center;
+    margin-top: 3%;
+}
+
+.body-wrapper .select-test-wrapper .select-buttons .button{
+    position: relative;
+    width: 30%;
+    height: 40%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border-radius: .5vw;
+    transition: .3s ease;
+    cursor: pointer;
+}
+
+.body-wrapper .select-test-wrapper .select-buttons .button:nth-child(3) {
+    width: 37%; 
+}
+
+.body-wrapper .select-test-wrapper .select-buttons .button::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: .5vw;
+    border: .1vw solid transparent;
+    background: linear-gradient(90deg, #D8630F, #F59318) border-box;
+    -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: destination-out;
+    mask-composite: exclude;
+}
+
+.body-wrapper .select-test-wrapper .select-buttons .button:hover{
+    border-radius: .5vw;
+    background: linear-gradient(90deg, #D8630F 0%, #F59318 100%);
+}
+
+.body-wrapper .select-test-wrapper .select-buttons .button.active{
+    border-radius: .5vw;
+    background: linear-gradient(90deg, #D8630F 0%, #F59318 100%);
+}
+
+.body-wrapper .select-test-wrapper .select-buttons .button span{
+    color: white;
+    font-family: Gilroy-SemiBold;
+    font-size: 1.2vw;
+}
+
+.body-wrapper .select-test-wrapper .input-wrapper{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 2%;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2%;
+}
+
+.body-wrapper .select-test-wrapper .input-wrapper input{
+    background-color: transparent;
+    outline: none;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.433);
+    font-family: Gilroy-SemiBold;
+    font-size: .9vw;
+    border: 0;
+    border-bottom: .1vw solid grey;
+    transition: .3s ease;
+    padding-bottom: 1%;
+    padding-top: 1%;
+    width: 20%;
+}
+
+.body-wrapper .select-test-wrapper .input-wrapper input:focus{
+    border-width: .1vw;
+    border-image: linear-gradient(90deg, #D8630F, #F59318);
+    border-image-slice: 1;
+}
+
+.body-wrapper .select-test-wrapper .input-wrapper .button{
+    width: 20%;
+    height: 100%;
+    border-radius: .3vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(90deg, #D8630F, #F59318);
+    scale: 1;
+    transition: .1s ease;
+    cursor: pointer;
+}
+
+.body-wrapper .select-test-wrapper .input-wrapper .button:hover{
+    scale: 1.1
+}
+
+.body-wrapper .select-test-wrapper .input-wrapper .button span{
+    font-family: Gilroy-ExtraBold;
+    font-size: .8vw;
+    color: white;
+}
+
+.body-wrapper .select-test-wrapper .start-buttons{
+    width: 50%;
+    height: 10%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 2%;
+    margin-top: 2%;
+}
+
+.body-wrapper .select-test-wrapper .start-buttons .button{
+    width: 45%;
+    height: 100%;
+    border-radius: .5vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    background: linear-gradient(90deg, #434643 0%, #62605F 100%);
+    cursor: pointer;
+    scale: 1;
+    transition: .2s ease;
+    border: none;
+}
+
+.body-wrapper .select-test-wrapper .start-buttons .button:hover{
+    scale: 1.05
+}
+
+.body-wrapper .select-test-wrapper .start-buttons .button.active{
+    background: linear-gradient(90deg, #D8630F 0%, #F59318 100%);
+}
+
+.body-wrapper .select-test-wrapper .start-buttons .button:nth-child(2) {
+    background: transparent;
+    border: .15vw solid white;
+}
+
+.body-wrapper .select-test-wrapper .start-buttons .button span{
+    color: white;
+    font-family: Gilroy-ExtraBold;
+    font-size: 1vw;
+}
+
+/* LAPTOP RESPONSIVE */
+
+@media only screen and (max-width: 1440px) {
+    body{
+        background-size: 130%;
+        background-position: 25%;
+    }
+}
+
+/* PHONE RESPONSIVE */
+
+@media only screen and (max-width: 600px) {
+    body{
+        background-image: url(https://cdn.discordapp.com/attachments/1308538218462974013/1309603692655415397/image.png?ex=67422efb&is=6740dd7b&hm=487a520efff39e05a5b7f1c8bb956059b0de77209eea808d294a0ab81dfe7d44&);
+        background-size: 425%;
+        background-position: 39%;
+        backdrop-filter: blur(5px);
+    }
+    
+    .body-wrapper{
+        width: 100%;
+        height: 100%;
+    }
+
+    .body-wrapper .title{
+        margin-top: 2%;
+        font-size: 5vw;
+    }
+
+    .body-wrapper .test-wrapper .header{
+        font-size: 4.5vw;
+    }
+
+    .body-wrapper .test-wrapper .test-stats{
+        margin-top: -4%;
+    }
+
+    .body-wrapper .test-wrapper .test-stats span{
+        font-size: 3.5vw;
+    }
+
+    .body-wrapper .test-wrapper span.question{
+        width: 75%;
+        text-align: center;
+        font-size: 4.5vw;
+    }
+
+    .body-wrapper .test-wrapper .test-options{
+        width: 100%;
+        height: 30%;
+    }
+
+    .body-wrapper .test-wrapper .test-options .option{
+        padding: 3% 2%;
+        gap: 3%;   
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .body-wrapper .test-wrapper .test-options .option::before{
+        border-radius: .5vw;
+    }
+
+    .body-wrapper .test-wrapper .test-options .option .ball{
+        width: 2vw;
+        height: 2vw;
+    }
+
+    .body-wrapper .test-wrapper .test-options .option .ball.active{
+        width: 2.5vw;
+        height: 2.5vw;
+    }
+
+    .body-wrapper .test-wrapper .test-options .option span{
+        font-size: 4vw;
+    }
+
+    .body-wrapper .test-wrapper .test-buttons{
+        width: 90%;
+        height: 30%;
+        display: flex;
+        flex-direction: column;
+        gap: 5%;
+    }
+
+    .body-wrapper .test-wrapper .test-buttons .button{
+        width: 80%;
+        height: 20%;
+        font-size: 3.5vw;
+        border-radius: 1vw;
+    }
+
+    .body-wrapper .test-result span{
+        font-size: 5vw;
+    }
+
+    .body-wrapper .test-result{
+        gap: 2%;
+    }
+
+    .body-wrapper .test-result .button{
+        width: 50%;
+        height: 5%;
+        border-radius: .5vw;
+    }
+    
+    .body-wrapper .test-result .button span{
+        font-size: 3vw;
+    }
+
+    .body-wrapper .discord-connect-wrapper span{
+        width: 75%;
+        font-size: 4vw;
+    }
+
+    .body-wrapper .discord-connect-wrapper {
+        gap: 4%;
+    }
+
+    .body-wrapper .discord-connect-wrapper .button{
+        width: 60%;
+        height: 7%;
+    }
+
+    .body-wrapper .discord-connect-wrapper .button a{
+        font-size: 3.2vw;
+        border-radius: .7vw;
+    }
+
+    .body-wrapper .discord-connect-wrapper .button i{
+        display: none;
+    }
+
+    .body-wrapper .select-test-wrapper .discord-user{
+        font-size: 3.5vw;
+    }
+
+    .body-wrapper .select-test-wrapper .select-text{
+        margin-top: 20%;
+        font-size: 4.2vw;
+    }
+
+    .body-wrapper .select-test-wrapper .select-buttons{
+        margin-top: 0;
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .body-wrapper .select-test-wrapper .select-buttons .button{
+        width: 80%;
+        height: 20%;
+    }
+
+    .body-wrapper .select-test-wrapper .select-buttons .button span{
+        font-size: 3vw;
+    }
+
+    .body-wrapper .select-test-wrapper .select-buttons .button:nth-child(3) {
+        width: 80%;
+        height: 20%;
+    }
+
+    .body-wrapper .select-test-wrapper .input-wrapper{
+        display: flex;
+        flex-direction: column;
+        height: 15%;
+        gap: 15%;
+    }
+
+    .body-wrapper .select-test-wrapper .input-wrapper input{
+        width: 50%;
+        font-size: 3.5vw;
+    }
+
+    .body-wrapper .select-test-wrapper .input-wrapper .button{
+        width: 50%;
+        height: 30%;
+        border-radius: 1vw;
+    }
+
+    .body-wrapper .select-test-wrapper .input-wrapper .button span{
+        font-size: 3vw;
+    }
+
+    .body-wrapper .select-test-wrapper .start-buttons{
+        width: 100%;
+        height: 20%;
+        display: flex;
+        flex-direction: column;
+        gap: 5%;
+    }
+
+    .body-wrapper .select-test-wrapper .start-buttons .button{
+        width: 60%;
+        height: 30%;
+    }
+
+    .body-wrapper .select-test-wrapper .start-buttons .button span{
+        font-size: 3vw;
+    }
+}

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste Departament</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+    <div class="body-wrapper">
+        <span class="title">Departamentul Medical FPlayT</span>
+        <div class="select-test-wrapper">
+            <span class="discord-user" id="discordUser"></span>
+            <span class="select-text">Selectează testul pe care dorești să îl susții</span>
+            <div class="select-buttons">
+                <div class="button" onclick="selectTest('RADIO', 1)">
+                    <span>RADIO</span>
+                </div>
+                <div class="button" onclick="selectTest('BLS', 2)">
+                    <span>BLS</span>
+                </div>
+                <div class="button" onclick="selectTest('REZIDENTIAT', 3)">
+                    <span>REZIDENȚIAT</span>
+                </div>
+            </div>
+            <div class="input-wrapper">
+                <input type="text" placeholder="Introdu codul primit">
+                <div onclick="sendWebhook()" class="button">
+                    <span>SOLICITĂ COD</span>
+                </div>
+            </div>
+            <div class="start-buttons">
+                <button class="button" id="starttest" disabled onclick="startTest()">
+                    <span>ÎNCEPE TESTUL</span>
+                </button>
+                <div class="button">
+                    <span onclick="learnForTests()">ÎNVATĂ PENTRU TESTE</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    let selectedTestType = "";  
+    
+    const urlParams = new URLSearchParams(window.location.search);
+    const name = urlParams.get('name'); 
+    if (name) {
+        document.getElementById('discordUser').textContent = `Bine ai revenit, ${name}!`;
+    }
+    
+    setInterval(() => {
+        if ($(".input-wrapper input").val() == "" || $(".input-wrapper input").val() == null) {
+            document.getElementById("starttest").setAttribute("disabled", "");
+            $(".start-buttons .button:nth-child(1)").removeClass("active")
+        } else {
+            document.getElementById("starttest").removeAttribute("disabled", "");
+            $(".start-buttons .button:nth-child(1)").addClass("active")
+        }
+    }, 1000)
+    
+    let cd = localStorage.getItem('cd') ? parseInt(localStorage.getItem('cd')) : 0;
+    let sent = localStorage.getItem('sent'); // Initialize 'sent' value
+    if (!sent) {
+        sent = 'false'; // Set default if not present
+        localStorage.setItem('sent', sent);
+    }
+
+    const sendWebhook = async () => {
+        console.log("da:", localStorage.getItem('sent'))
+        if (localStorage.getItem('sent') === 'true') {
+            Toastify({
+                text: "Ai solicitat deja un cod!",
+                duration: 4000, 
+                gravity: "top", 
+                position: "right", 
+                backgroundColor: "#eb2d2d",
+                style: {
+                    fontFamily: "Gilroy-Medium", 
+                    boxShadow: "none"
+                }
+            }).showToast();
+            return; // Ne oprim aici
+        }
+
+        if (!selectedTestType) {
+            Toastify({
+                text: "Selectează un tip de test!",
+                duration: 4000, 
+                gravity: "top", 
+                position: "right", 
+                backgroundColor: "#eb2d2d",
+                style: {
+                    fontFamily: "Gilroy-Medium", 
+                    boxShadow: "none"
+                }
+            }).showToast();
+            return;
+        }
+
+        // Logica de trimitere cod
+        const code = generateCode();
+        const discordId = urlParams.get('id');
+        const data = {
+            code: code,
+            discordId: discordId,
+            testType: selectedTestType,
+            name: urlParams.get('name')
+        };
+
+        try {
+         await axios.post('https://teste-medici-fplayt.vercel.app/send-webhook', data);
+            Toastify({
+                text: "Codul dvs. a fost trimis. Contactați un tester coduri pe Discord!",
+                duration: 5000,
+                gravity: "top",
+                position: "right",
+                backgroundColor: "#37ad23",
+                style: {
+                    fontFamily: "Gilroy-Medium",
+                    boxShadow: "none",
+                },
+            }).showToast();
+        } catch (error) {
+            console.error('Error sending webhook:', error);
+            Toastify({
+                text: "Eroare la trimiterea codului. Vă rugăm să încercați din nou.",
+                duration: 5000,
+                gravity: "top",
+                position: "right",
+                backgroundColor: "#eb2d2d",
+                style: {
+                    fontFamily: "Gilroy-Medium",
+                    boxShadow: "none",
+                },
+            }).showToast();
+        }
+
+
+        localStorage.setItem('sent', 'true');
+    }
+
+
+
+    setInterval(() => {
+        let sent = localStorage.getItem('sent') === "true";
+        cd = parseInt(localStorage.getItem('cd')) || 60000;
+
+        if (sent) {
+            cd -= 1000;
+            localStorage.setItem('cd', cd);
+        }
+
+        if (cd <= 0) {
+            cd = 60000; // Reset cooldown
+            localStorage.setItem('sent', 'false'); // Reset 'sent' status
+            localStorage.setItem('cd', cd); // Reset countdown timer
+        }
+    }, 1000);
+
+
+    
+    function generateCode() {
+        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        let code = '';
+        for (let i = 0; i < 8; i++) {
+            code += chars.charAt(Math.floor(Math.random() * chars.length));
+        }
+        return code;
+    }
+
+    function selectTest(testType, id) {
+        $(`.select-buttons .button:nth-child(1)`).removeClass("active")
+        $(`.select-buttons .button:nth-child(2)`).removeClass("active")
+        $(`.select-buttons .button:nth-child(3)`).removeClass("active")
+        $(`.select-buttons .button:nth-child(${id})`).addClass("active")
+        selectedTestType = testType;
+    }
+
+    function startTest() {
+        const code = document.querySelector('input').value;
+        const discordId = urlParams.get('id');
+        const testType = selectedTestType;
+        const name = urlParams.get('name');
+
+        if (!code) {
+            alert("Introdu codul!");
+            return;
+        }
+
+        window.location.href = `/test?testType=${testType}&code=${code}&discordId=${discordId}&name=${name}`;
+    }
+
+    function learnForTests() {
+        window.open("https://docs.google.com/spreadsheets/d/1b_qED-vCa5KjgH8b1pb-KFr6w5qzMPFwNzjlwc1AlKA/edit?gid=185301826#gid=185301826","_blank");
+    }
+</script>
+</html>
