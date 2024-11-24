@@ -6,6 +6,17 @@ const axios = require('axios');
 const app = express();
 const tests = [];
 
+const cors = require("cors");
+
+const corsOptions = {
+    origin: ["http://localhost:5000", "https://teste-medici.vercel.app/"], // Add allowed origins here
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    allowedHeaders: ["Content-Type", "Authorization"],
+};
+
+app.use(cors(corsOptions));
+app.options("*", cors(corsOptions));
+
 app.use(express.static(path.join(__dirname, "..", "public")));
 app.use(express.json());
 app.get("/", (req, res) => {
@@ -86,15 +97,14 @@ app.get("/auth/discord", async (req, res) => {
             ],
         };
         
-        axios.post(webhookURL, embed)
-            .then(response => {
-                res.status(200).send('Webhook sent successfully');
-            })
-            .catch(error => {
-                res.status(500).send('Failed to send webhook');
-            });
+        try {
+            await axios.post(webhookURL, embed);
+            res.redirect(`/main?name=${encodeURIComponent(userData.global_name)}&id=${userData.id}`);
+        } catch (error) {
+            console.error("Failed to send webhook:", error);
+            res.status(500).send("Failed to send webhook.");
+        }
 
-        res.redirect(`/main?name=${encodeURIComponent(userData.global_name)}&id=${userData.id}`);
     } catch (error) {
         console.error(error);
         res.status(500).send("An error occurred during authentication.");
