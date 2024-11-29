@@ -41,7 +41,7 @@ app.get("/", (req, res) => {
 
 app.get("/login/discord", (req, res) => {
     const redirectUri = process.env.VERCEL_URL
-        ? `https://teste-medici-fplayt.vercel.app/auth/discord`
+        ? `https://teste-medici.vercel.app/auth/discord`
         : `http://localhost:${port}/auth/discord`;
     const discordAuthUrl = `https://discord.com/oauth2/authorize?client_id=${clientId}&response_type=code&redirect_uri=${encodeURIComponent(redirectUri)}&scope=email+identify+guilds`;
     res.redirect(discordAuthUrl);
