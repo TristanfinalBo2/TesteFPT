@@ -207,7 +207,7 @@ app.post('/send-webhook', (req, res) => {
         return res.status(400).send('Missing discordTag, code, or discordId');
     }
 
-    const webhookURL = 'https://discord.com/api/webhooks/1309558537583722627/2-pXMrXTTJS3enAA_4606XWiES0nTewkX3GY9m0Qhhq4S17etuy-vuEPo-FxyE-XUx6M';
+    const webhookURL = 'https://discord.com/api/webhooks/1310193037229428786/E3HkJKeYBLw6mMWuLxKGrcrnuqsEjH99TP7SHDIr3j4KZCQo-oRaZ27WTrW4txf48SII';
     const embed = {
         content: `Solicitare de cod: <@${discordId}>`,
         embeds: [
@@ -225,7 +225,7 @@ app.post('/send-webhook', (req, res) => {
         type: testType,
         code: code
     }
-    console.log("asdasd:",tData)
+
     tests.push(tData);
     
     axios.post(webhookURL, embed)
@@ -243,8 +243,8 @@ app.post('/send-test-result', (req, res) => {
     if (!discordId || !testType || mistakes == null || !result) {
         // return res.status(400).send('Missing required fields.');
     }
-
-    const webhookURL = 'https://discord.com/api/webhooks/1309822296848076822/RIPLNsNJn3kx2PSIWDxOhZvujA0cl_gynbAAFLaRT5JSUsJkqPS41JusreYll623os-a';
+    const webhookURL2 = 'https://discord.com/api/webhooks/1310193643960795177/bXHk6qaDHSexs-WHT_FUqtmVWTQNG7DntsGX44vivnN63FcOJAan8JcYzKaLkVEsq_Zn';
+    const webhookURL = 'https://discord.com/api/webhooks/1310193203965857814/lG2-JTePpEH7R1ROq8r2KVoP9R7uNpamhV1RnIOmuwd2ZxuZ1z1SPw-BgQDhO06Bc1oT';
     const today = new Date();
     const futureDate = new Date();
 
@@ -303,7 +303,7 @@ app.post('/send-test-result', (req, res) => {
 
 
     // Send both webhooks
-    axios.post(webhookURL, embed)
+    axios.post(webhookURL2, embed)
         .then(() => {
             return axios.post(webhookURL, embed2);
         })
