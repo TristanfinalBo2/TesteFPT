@@ -48,10 +48,11 @@
 <script>
     let selectedTestType = "";  
     
-    const urlParams = new URLSearchParams(window.location.search);
-    const name = urlParams.get('name'); 
-    if (name) {
-        document.getElementById('discordUser').textContent = `Bine ai revenit, ${name}!`;
+    const userName = "{{USER_NAME}}";
+    const userId = "{{USER_ID}}";
+    console.log(`User: ${userName}, ID: ${userId}`);
+    if (userName) {
+        document.getElementById('discordUser').textContent = `Bine ai revenit, ${userName}!`;
     }
     
     setInterval(() => {
@@ -72,7 +73,6 @@
     }
 
     const sendWebhook = async () => {
-        console.log("da:", localStorage.getItem('sent'))
         if (localStorage.getItem('sent') === 'true') {
             Toastify({
                 text: "Ai solicitat deja un cod!",
@@ -105,14 +105,13 @@
 
         // Logica de trimitere cod
         const code = generateCode();
-        const discordId = urlParams.get('id');
         const data = {
             code: code,
-            discordId: discordId,
+            discordId: userId,
             testType: selectedTestType,
-            name: urlParams.get('name')
+            name: userName
         };
-
+        console.log(data)
         try {
          await axios.post('https://teste-medici.vercel.app/send-webhook', data);
             Toastify({
@@ -141,23 +140,21 @@
                 },
             }).showToast();
         }
-
-
     }
 
 
 
     setInterval(() => {
         let sent = localStorage.getItem('sent') === "true";
-        cd = parseInt(localStorage.getItem('cd')) || 15000;
-
+        cd = parseInt(localStorage.getItem('cd')) || 20000;
+        console.log(sent, cd)
         if (sent) {
             cd -= 1000;
             localStorage.setItem('cd', cd);
         }
 
         if (cd <= 0) {
-            cd = 60000; // Reset cooldown
+            cd = 20000; // Reset cooldown
             localStorage.setItem('sent', 'false'); // Reset 'sent' status
             localStorage.setItem('cd', cd); // Reset countdown timer
         }
@@ -184,9 +181,9 @@
 
     function startTest() {
         const code = document.querySelector('input').value;
-        const discordId = urlParams.get('id');
+        const discordId = userId;
         const testType = selectedTestType;
-        const name = urlParams.get('name');
+        const name = userName;
 
         if (!code) {
             alert("Introdu codul!");
