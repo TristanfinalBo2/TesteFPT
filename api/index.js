@@ -14,7 +14,7 @@ app.use(
         secret: "salut13278dbhfSecretSexVulcanicErozivShivaLazzariAlinRodriguezAlexandruBogdanLorenzoMariusDeLaSalciua", // Schimbă cu un secret puternic
         resave: false,
         saveUninitialized: true,
-        cookie: { secure: false }, // Pune `secure: true` în producție
+        cookie: { secure: true }, // Pune `secure: true` în producție
     })
 );
 
@@ -225,7 +225,7 @@ app.post('/send-webhook', (req, res) => {
         type: testType,
         code: code
     }
-
+    console.log("asdasd:",tData)
     tests.push(tData);
     
     axios.post(webhookURL, embed)
@@ -243,8 +243,9 @@ app.post('/send-test-result', (req, res) => {
     if (!discordId || !testType || mistakes == null || !result) {
         // return res.status(400).send('Missing required fields.');
     }
-    const webhookURL2 = 'https://discord.com/api/webhooks/1310193643960795177/bXHk6qaDHSexs-WHT_FUqtmVWTQNG7DntsGX44vivnN63FcOJAan8JcYzKaLkVEsq_Zn';
-    const webhookURL = 'https://discord.com/api/webhooks/1310193203965857814/lG2-JTePpEH7R1ROq8r2KVoP9R7uNpamhV1RnIOmuwd2ZxuZ1z1SPw-BgQDhO06Bc1oT';
+
+    const webhookURL = 'https://discord.com/api/webhooks/1310193643960795177/bXHk6qaDHSexs-WHT_FUqtmVWTQNG7DntsGX44vivnN63FcOJAan8JcYzKaLkVEsq_Zn';
+    const webhookURL2 = 'https://discord.com/api/webhooks/1310193203965857814/lG2-JTePpEH7R1ROq8r2KVoP9R7uNpamhV1RnIOmuwd2ZxuZ1z1SPw-BgQDhO06Bc1oT';
     const today = new Date();
     const futureDate = new Date();
 
@@ -303,9 +304,9 @@ app.post('/send-test-result', (req, res) => {
 
 
     // Send both webhooks
-    axios.post(webhookURL2, embed)
+    axios.post(webhookURL, embed)
         .then(() => {
-            return axios.post(webhookURL, embed2);
+            return axios.post(webhookURL2, embed2);
         })
         .then(() => {
             // res.status(200).send('Webhook sent successfully');
