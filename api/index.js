@@ -14,7 +14,7 @@ app.use(
         secret: "salut13278dbhfSecretSexVulcanicErozivShivaLazzariAlinRodriguezAlexandruBogdanLorenzoMariusDeLaSalciua", // Schimbă cu un secret puternic
         resave: false,
         saveUninitialized: true,
-        cookie: { secure: true }, // Pune `secure: true` în producție
+        cookie: { secure: false }, // Pune `secure: true` în producție
     })
 );
 
