@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Teste Departament</title>
+    <title>Test - {{TEST_TYPE}}</title>
     <script src="http://code.jquery.com/jquery.min.js"></script>
     <script src="http://code.jquery.com/jquery-3.6.0.js"></script>
     <script src="http://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="/style.css">
 </head>
 <body>
+    <div id="blackout"></div>
     <div class="body-wrapper">
         <span class="title">Departamentul Medical FPlayT</span>
         <div class="test-wrapper">
@@ -47,14 +48,31 @@
 
 <script src="/script.js"></script>
 <script>
-    const urlParams = new URLSearchParams(window.location.search);
-    const testType = urlParams.get('testType');
-    const code = urlParams.get('code');
-    const discordId = urlParams.get('discordId');
-    const name = urlParams.get('name')
-    document.getElementById("testType").textContent = `Test ${testType}`;
+    const testType = "{{TEST_TYPE}}"
+    const code = "{{TEST_CODE}}"
+    const discordId = "{{TEST_NAME}}"
+    const name = "{{TEST_DISCORD}}"
+    const testType2 = "{{TEST_TYPE2}}"
+    document.getElementById("testType").innerHTML = `Test ${testType2}`;
     function redirectMain() {
-        window.location.href = `/main`;
+        window.location.href = `/main?name=${encodeURIComponent(name)}&id=${encodeURIComponent(discordId)}`;
     }
+
+    function checkResize() {
+      const width = window.innerWidth;
+      const height = window.innerHeight;
+      if (width == 1920 && height == 1080) {
+        if (document.hasFocus()) {
+            document.getElementById("blackout").style.display = "none";
+        } else {
+            document.getElementById("blackout").style.display = "block";
+        }
+      } else {
+        document.getElementById("blackout").style.display = "block";
+      }
+    }
+    setTimeout(() => {}, 1000)
+    checkResize();
+    window.addEventListener('resize', checkResize);
 </script>
 </html>

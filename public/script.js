@@ -1,53 +1,12 @@
 document.addEventListener("DOMContentLoaded", () => {
     const blsQuestions = [
         { question: "g", options: ["Fier", "Hidrocortizon", "3", "Vitamina C"], correct: 0 },
-        { question: "v", options: ["Fier", "Hidrocortizon", "5", "Vitamina C"], correct: 0 },
-        { question: "Ce medicament administrezi unui pacient aflat în stare de anemie?", options: ["f4", "Hidrocortizon", "Paracetamol", "Vitamina C"], correct: 0 },
-        { question: "Ce medicament administrezi unui pacient aflat în stare de anemie?", options: ["f5", "Hidrocortizon", "Paracetamol", "Vitamina C"], correct: 0 },
-        { question: "Ce medicament administrezi unui pacient aflat în stare de anemie?", options: ["6", "sc", "a", "Vitamina C"], correct: 0 },
-        { question: "Ce medicament administrezi unui pacient aflat în stare de anemie?", options: ["f6", "Hidrocortizon", "g", "Vitamina C"], correct: 0 },
-        { question: "Ce medicament administrezi unui pacient aflat în stare de anemie?", options: ["y", "c", "Paracetamol", "Vitamina C"], correct: 0 },
-        { question: "Ce medicament administrezi unui pacient aflat în stare de anemie?", options: ["g", "Hidrocortizon", "t", "Vitamina C"], correct: 0 },
-        { question: "Ce medicament administrezi unui pacient aflat în stare de anemie?", options: ["b", "v", "Paracetamol", "Vitamina C"], correct: 0 },
-        { question: "Ce medicament administrezi unui pacient aflat în stare de anemie?", options: ["1", "Hidrocortizon", "Paracetamol", "Vitamina C"], correct: 0 },
-        { question: "Ce medicament administrezi unui pacient aflat în stare de anemie?", options: ["4", "Hidrocortizon", "Paracetamol", "Vitamina C"], correct: 0 },
-        { question: "Ce medicament administrezi unui pacient aflat în stare de anemie?", options: ["6", "Hidrocortizon", "Paracetamol", "Vitamina C"], correct: 0 },
     ];
     const radioQuestions = [
         { question: "radio", options: ["Fier", "Hidrocortizon", "Paracetamol", "Vitamina C"], correct: 0 },
-        { question: "asd", options: ["Fier", "Hidrocortizon", "Paracetamol", "Vitamina C"], correct: 0 },
-        { question: "ve", options: ["Fier", "Hidrocortizon", "v", "Vitamina C"], correct: 0 },
-        { question: "d", options: ["Fier", "Hidrocortizon", "a", "Vitamina C"], correct: 0 },
-        { question: "g", options: ["Fier", "Hidrocortizon", "3", "Vitamina C"], correct: 0 },
-        { question: "v", options: ["Fier", "Hidrocortizon", "5", "Vitamina C"], correct: 0 },
-        { question: "Ce medicament administrezi unui pacient aflat în stare de anemie?", options: ["f4", "Hidrocortizon", "Paracetamol", "Vitamina C"], correct: 0 },
-        { question: "Ce medicament administrezi unui pacient aflat în stare de anemie?", options: ["f5", "Hidrocortizon", "Paracetamol", "Vitamina C"], correct: 0 },
-        { question: "Ce medicament administrezi unui pacient aflat în stare de anemie?", options: ["6", "sc", "a", "Vitamina C"], correct: 0 },
-        { question: "Ce medicament administrezi unui pacient aflat în stare de anemie?", options: ["f6", "Hidrocortizon", "g", "Vitamina C"], correct: 0 },
-        { question: "Ce medicament administrezi unui pacient aflat în stare de anemie?", options: ["y", "c", "Paracetamol", "Vitamina C"], correct: 0 },
-        { question: "Ce medicament administrezi unui pacient aflat în stare de anemie?", options: ["g", "Hidrocortizon", "t", "Vitamina C"], correct: 0 },
-        { question: "Ce medicament administrezi unui pacient aflat în stare de anemie?", options: ["b", "v", "Paracetamol", "Vitamina C"], correct: 0 },
-        { question: "Ce medicament administrezi unui pacient aflat în stare de anemie?", options: ["1", "Hidrocortizon", "Paracetamol", "Vitamina C"], correct: 0 },
-        { question: "Ce medicament administrezi unui pacient aflat în stare de anemie?", options: ["4", "Hidrocortizon", "Paracetamol", "Vitamina C"], correct: 0 },
-        { question: "Ce medicament administrezi unui pacient aflat în stare de anemie?", options: ["6", "Hidrocortizon", "Paracetamol", "Vitamina C"], correct: 0 },
     ];
     const rezidentiatQuestions = [
         { question: "rezi", options: ["Fier", "Hidrocortizon", "Paracetamol", "Vitamina C"], correct: 0 },
-        { question: "asd", options: ["Fier", "Hidrocortizon", "Paracetamol", "Vitamina C"], correct: 0 },
-        { question: "ve", options: ["Fier", "Hidrocortizon", "v", "Vitamina C"], correct: 0 },
-        { question: "d", options: ["Fier", "Hidrocortizon", "a", "Vitamina C"], correct: 0 },
-        { question: "g", options: ["Fier", "Hidrocortizon", "3", "Vitamina C"], correct: 0 },
-        { question: "v", options: ["Fier", "Hidrocortizon", "5", "Vitamina C"], correct: 0 },
-        { question: "Ce medicament administrezi unui pacient aflat în stare de anemie?", options: ["f4", "Hidrocortizon", "Paracetamol", "Vitamina C"], correct: 0 },
-        { question: "Ce medicament administrezi unui pacient aflat în stare de anemie?", options: ["f5", "Hidrocortizon", "Paracetamol", "Vitamina C"], correct: 0 },
-        { question: "Ce medicament administrezi unui pacient aflat în stare de anemie?", options: ["6", "sc", "a", "Vitamina C"], correct: 0 },
-        { question: "Ce medicament administrezi unui pacient aflat în stare de anemie?", options: ["f6", "Hidrocortizon", "g", "Vitamina C"], correct: 0 },
-        { question: "Ce medicament administrezi unui pacient aflat în stare de anemie?", options: ["y", "c", "Paracetamol", "Vitamina C"], correct: 0 },
-        { question: "Ce medicament administrezi unui pacient aflat în stare de anemie?", options: ["g", "Hidrocortizon", "t", "Vitamina C"], correct: 0 },
-        { question: "Ce medicament administrezi unui pacient aflat în stare de anemie?", options: ["b", "v", "Paracetamol", "Vitamina C"], correct: 0 },
-        { question: "Ce medicament administrezi unui pacient aflat în stare de anemie?", options: ["1", "Hidrocortizon", "Paracetamol", "Vitamina C"], correct: 0 },
-        { question: "Ce medicament administrezi unui pacient aflat în stare de anemie?", options: ["4", "Hidrocortizon", "Paracetamol", "Vitamina C"], correct: 0 },
-        { question: "Ce medicament administrezi unui pacient aflat în stare de anemie?", options: ["6", "Hidrocortizon", "Paracetamol", "Vitamina C"], correct: 0 },
     ];
     const urlParams = new URLSearchParams(window.location.search);
     const testType = urlParams.get("testType");
