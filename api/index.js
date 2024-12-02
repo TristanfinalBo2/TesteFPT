@@ -188,8 +188,7 @@ app.get("/test", (req, res) => {
             html = html.replace("{{TEST_TYPE}}", testType)
                        .replace("{{TEST_CODE}}", code)
                        .replace("{{TEST_NAME}}", name)
-                       .replace("{{TEST_DISCORD}}", discordId)
-                       .replace("{{TEST_TYPE2}}", testType); 
+                       .replace("{{TEST_DISCORD}}", discordId);
 
             // Send the modified HTML to the client
             return res.send(html);
