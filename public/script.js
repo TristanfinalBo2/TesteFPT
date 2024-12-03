@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
         { question: "g", options: ["Fier", "Hidrocortizon", "3", "Vitamina C"], correct: 0 },
     ];
     const radioQuestions = [
-        { question: "radio", options: ["Fier", "Hidrocortizon", "Paracetamol", "Vitamina C"], correct: 0 },
+        { question: "ce faci?", options: ["Fier", "Hidrocortizon", "Paracetamol", "Vitamina C"], correct: 0 },
     ];
     const rezidentiatQuestions = [
         { question: "rezi", options: ["Fier", "Hidrocortizon", "Paracetamol", "Vitamina C"], correct: 0 },
