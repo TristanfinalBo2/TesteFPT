@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
             break;
         case "BLS":
             questions = blsQuestions;
-            time = 600000;
+            time = 500000;
             break;
         case "REZIDENTIAT":
             questions = rezidentiatQuestions;
