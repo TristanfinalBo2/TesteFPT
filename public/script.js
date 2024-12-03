@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
     switch (testType) {
         case "RADIO":
             questions = radioQuestions;
-            time = 300000;
+            time = 150000;
             break;
         case "BLS":
             questions = blsQuestions;
