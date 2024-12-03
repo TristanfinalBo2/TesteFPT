@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
     ];
     const radioQuestions = [
         { question: "Te afli alături de un coleg intr-un echipaj si ai preluat ultimul apel. Cum anunti pe statie?", options: ["M-callsign+1 10-1", "M-callsign 10-1", "M-callsign+1 10-11", "M-callsign 10-55"], correct: 0 },
-        { question: "Esti impreuna cu doi colegi spre un apel, intre timp ati facut accident si nu mai puteti continua drumul spre apel. PE STATIE ANUNTI: M-callsign+1 am facut 10-50(major/minor) solicit un 10-78 la urmatorul 10-20?", options: ["Adevarat", "Fals"], correct: 1 },
+        { question: "Esti impreuna cu doi colegi spre un apel, intre timp ati facut accident si nu mai puteti continua drumul spre apel. PE STATIE ANUNTI: M-callsign+1 am facut 10-50(major/minor) solicit un 10-78 la urmatorul 10-20?", options: ["Adevarat", "Fals"], correct: 0 },
         { question: "Te afli singur in masina in zona Groove, iar doua persoane mascate trag focuri de arma in directia ta, punandu-te in pericol. Cum anunti aceasta actiune pe statie?", options: ["M-callsign +1 10-0 la 10-20 Groove", "M-callsign 10-0 la 10-20 Groove", "M-callsign 10-11 la 10-20 Groove", "M-callsign 10-39 la 10-20 Groove"], correct: 1 },
         { question: "Ai mers la un apel, ai preluat pacientul si acum te indrepti spre spital. Cum anunti aceasta actiune pe statie?", options: ["M-callsign am un 10-95 constient/inconstient, 10-76 catre Spital Viceroy", "M-callsign 10-76 catre Spital Viceroy", "M-callsign am un 10-95 constient/inconstient", "M-callsign 10-55, am un 10-95 constient/inconstient, 10-76 catre Spital Viceroy"], correct: 0 },
         { question: "Un politist a intrat pe statie si solicita un echipaj medical la ultimul cod 4, dupa ce a raspuns gradul superior medical pe statie si a solicitat un medic sa mearga la cod 4,cum raspunzi pe statie ca preiei codul 4?", options: ["M-callsign 10-13", "M-callsign 10-1", "M-callsign 10-55", "M-callsign 10-20"], correct: 0 },
@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
         { question: "Te afli la un apel alaturi de un coleg, iar dupa ce ati stabilizat pacientul si i-ati acordat primul ajutor la fata locului, acesta va spune ca NU doreste transport la spital. Cum anunti pe statie?", options: ["M-callsign 10-55", "M-callsign+1 10-55", "M-callsign+1 10-76", "M-callsign+1 10-95 constient/inconstient, 10-76 Spital Viceroy"], correct: 1 },
         { question: "Cum se anunta o regrupare pe dispecer si statie? (Aceasta este anuntata de medicii ce detin gradul de Supervizor Regrupari)", options: ["M-callsign 10-39 10-20 helipad", "M-callsign 10-33 10-20 helipad", "M-callsign 10-20 helipad", "M-callsign 10-39", "M-callsign 10-33"], correct: 0 },
         { question: "Este un cod 0 in desfasurare si nu se intelege nimic pe statie , in acest caz tu vrei sa faci liniste, cum spui pe statie?", options: ["M-callsign 10-33", "M-callsign 10-39", "M-callsign 10-41", "M-callsign 10-9"], correct: 0 },
-        { question: "Care dintre urmatoarele coduri se folosesc pe dispecer?", options: ["M-callsign 10-4", "M-callsign 10-9", "M-callsign 10-100"], correct: 0 },
+        { question: "Care dintre urmatoarele coduri se folosesc pe dispecer?", options: ["M-callsign 10-4", "M-callsign 10-9", "M-callsign 10-100"], correct: 2 },
     ];
     const rezidentiatQuestions = [
         { question: "rezi", options: ["Fier", "Hidrocortizon", "Paracetamol", "Vitamina C"], correct: 0 },
@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
     switch (testType) {
         case "RADIO":
             questions = radioQuestions;
-            time = 150000;
+            time = 200000;
             break;
         case "BLS":
             questions = blsQuestions;
