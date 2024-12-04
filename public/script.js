@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded", () => {
         { question: "La nivelul carei vertebre se face incizia in cazul unei operatii pentru hernia de disc?", options: ["Vertebra L4", "Vertebra C1", "Vertebra X2", "Vertebra L3"], correct: 0 },
         { question: "Ce instrumentar medical se foloseste pentru a extrage glontul in cazul unei plagi impuscate?", options: ["Pensa chirurgicala", "Port ac si fir de sutura", "Foarfeca", "Cu mana"], correct: 0 },
         { question: "Ce se foloseste pentru a cuprinde cele doua capete rupte in cazul unei coaste rupte?", options: ["Tija", "Atela gipsata", "Bandaj steril", "2 departatoare"], correct: 0 },
-        { question: "In cazul unei operatii de apendicita, ce trebuie sa asteptam dup ace bandajam si finalizam operatia?", options: ["Sa se trezeasca pacientul", "Adminsitram morfina", "Ii punem perfuzie", "Ii dam doua palme"], correct: 0 },
+        { question: "In cazul unei operatii de apendicita, ce trebuie sa asteptam dupa ce bandajam si finalizam operatia?", options: ["Sa se trezeasca pacientul", "Adminsitram morfina", "Ii punem perfuzie", "Ii dam doua palme"], correct: 0 },
         { question: "In cazul oricai operatii care are loc sub anestezie totala, ce este important sa ii montam pacientului?", options: ["Masca de oxigen", "Masca cu dioxid de carbon", "Tuburi cu apa", "Tuburi cu apa"], correct: 0 },
         { question: "In cazul unei fracturi, ce aparatura medicale folosim pentru a diagnostica pacientul?", options: ["Radiografie", "Ecografie", "Endoscopie", "RMN"], correct: 0 },
         { question: "In cazul carei interventii chirurgicale folosesti anestezia locala?", options: ["Ruptura de menisc", "Hernie de disc", "Fisuri osoase"], correct: 0 },
@@ -75,7 +75,7 @@ document.addEventListener("DOMContentLoaded", () => {
             break;
         case "REZIDENTIAT":
             questions = rezidentiatQuestions;
-            time = 900000;
+            time = 700000;
             break;
         default:
             Toastify({
