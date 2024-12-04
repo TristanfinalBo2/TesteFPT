@@ -31,7 +31,27 @@ document.addEventListener("DOMContentLoaded", () => {
         { question: "Care dintre urmatoarele coduri se folosesc pe dispecer?", options: ["M-callsign 10-4", "M-callsign 10-9", "M-callsign 10-100"], correct: 2 },
     ];
     const rezidentiatQuestions = [
+        { question: "Care aparat folosim pentru operația de scoatere a unui tatuaj?", options: ["Laser", "Bisturiu", "Camera video in miniatura", "Pensa chirugicala"], correct: 0 },
+        { question: "Ce substanță este utilizată pentru anestezia locală în operația de scoatere a glonțului?", options: ["Xilina", "Propofol", "Ketamina", "Morfina"], correct: 0 },
+        { question: "Cum se tratează o coastă ruptă în timpul unei intervenții chirurgicale?", options: ["Umplem fisurile cu oseina", "Montam placuta de titan"], correct: 1 },
+        { question: "Ce instrument este folosit pentru a observa meniscul în timpul operației de ruptură a meniscului?", options: ["o cameră video mică", "Raze X", "RMN", "Poze cu telefonul"], correct: 0 },
+        { question: "Ce substanță este utilizată pentru anestezia totală în operația de hernie de disc la nivelul vertebrei L4?", options: ["Propofol", "Xilina", "Atropina", "Paracetamol"], correct: 0 },
+        { question: "Ce instrument folosim pentru a observa fisuri  pe o coastă ruptă în timpul unei intervenții chirurgicale?", options: ["2 departatoare", "Port ac si fir de sutura", "Tija metalica", "Nimic"], correct: 0 },
+        { question: "Care anestezie se foloseste in cazul unei operatii de indepartare a tatuajelor?", options: ["Nu se foloseste", "Anestezie locala", "Anestezie rahiala", "Anestezie totala"], correct: 0 },
         { question: "rezi", options: ["Fier", "Hidrocortizon", "Paracetamol", "Vitamina C"], correct: 0 },
+        { question: "rezi", options: ["Fier", "Hidrocortizon", "Paracetamol", "Vitamina C"], correct: 0 },
+        { question: "rezi", options: ["Fier", "Hidrocortizon", "Paracetamol", "Vitamina C"], correct: 0 },
+        { question: "rezi", options: ["Fier", "Hidrocortizon", "Paracetamol", "Vitamina C"], correct: 0 },
+        { question: "rezi", options: ["Fier", "Hidrocortizon", "Paracetamol", "Vitamina C"], correct: 0 },
+        { question: "rezi", options: ["Fier", "Hidrocortizon", "Paracetamol", "Vitamina C"], correct: 0 },
+        { question: "rezi", options: ["Fier", "Hidrocortizon", "Paracetamol", "Vitamina C"], correct: 0 },
+        { question: "rezi", options: ["Fier", "Hidrocortizon", "Paracetamol", "Vitamina C"], correct: 0 },
+        { question: "rezi", options: ["Fier", "Hidrocortizon", "Paracetamol", "Vitamina C"], correct: 0 },
+        { question: "rezi", options: ["Fier", "Hidrocortizon", "Paracetamol", "Vitamina C"], correct: 0 },
+        { question: "rezi", options: ["Fier", "Hidrocortizon", "Paracetamol", "Vitamina C"], correct: 0 },
+        { question: "rezi", options: ["Fier", "Hidrocortizon", "Paracetamol", "Vitamina C"], correct: 0 },
+        { question: "rezi", options: ["Fier", "Hidrocortizon", "Paracetamol", "Vitamina C"], correct: 0 },
+
     ];
     const urlParams = new URLSearchParams(window.location.search);
     const testType = urlParams.get("testType");
