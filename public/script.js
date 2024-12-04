@@ -60,7 +60,7 @@ document.addEventListener("DOMContentLoaded", () => {
     ];
     const urlParams = new URLSearchParams(window.location.search);
     const testType = urlParams.get("testType");
-
+    let countDownDate;
     let questions;
     let time;
     let discordId = urlParams.get("discordId");
@@ -91,12 +91,12 @@ document.addEventListener("DOMContentLoaded", () => {
             }).showToast();
             return;
     }
+    countDownDate = new Date().getTime() + time;
 
     let currentIndex = 0;
     let mistakes = 0;
     let userMistakes = [];
     let completedQuestions = [];
-    let countDownDate = new Date().getTime() + time;
 
     const questionElement = document.querySelector(".question");
     const optionsContainer = document.querySelector(".test-options");
@@ -118,17 +118,37 @@ document.addEventListener("DOMContentLoaded", () => {
         questionIndexElement.textContent = `${index + 1}/${questions.length}`;
     }
 
-    setInterval(() => {
-        const now = new Date().getTime();
-        const distance = countDownDate - now;
-        if (distance < 0) {
-            endTest("Timpul a expirat!", false);
-            return;
-        }
-        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-        document.getElementById("timp").textContent = `${minutes}m ${seconds}s`;
-    }, 1000);
+    let timeInterval; // To store the interval ID
+    let remainingTime = countDownDate - new Date().getTime(); // Store remaining time
+    
+    function startInterval() {
+        timeInterval = setInterval(() => {
+            const now = new Date().getTime();
+            const distance = countDownDate - now;
+    
+            if (distance <= 0) {
+                clearInterval(timeInterval); // Stop the interval
+                endTest("Timpul a expirat!", false);
+                return;
+            }
+    
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            document.getElementById("timp").textContent = `${minutes}m ${seconds}s`;
+        }, 1000);
+    }
+    
+    function stopInterval() {
+        clearInterval(timeInterval);
+        remainingTime = countDownDate - new Date().getTime(); // Save remaining time
+    }
+    
+    function resumeInterval() {
+        countDownDate = new Date().getTime() + remainingTime; // Adjust the countdown date
+        startInterval(); // Restart the interval
+    }
+
+    startInterval()
 
     function handleOptionClick(e) {
         const option = e.target.closest(".option");
