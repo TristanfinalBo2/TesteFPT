@@ -58,21 +58,29 @@
         window.location.href = `/main?name=${encodeURIComponent(name)}&id=${encodeURIComponent(discordId)}`;
     }
 
-    function checkResize() {
-      const width = window.innerWidth;
-      const height = window.innerHeight;
-      if (width == 1920 && height == 1080) {
-        if (document.hasFocus()) {
-            document.getElementById("blackout").style.display = "none";
-        } else {
-            document.getElementById("blackout").style.display = "block";
-        }
-      } else {
-        document.getElementById("blackout").style.display = "block";
-      }
-    }
-    setTimeout(() => {}, 1000)
-    checkResize();
-    window.addEventListener('resize', checkResize);
+//function checkResize() {
+  //const width = window.innerWidth;
+  //const height = window.innerHeight;
+
+  //const isFullscreenMonitor = width >= 1920 && height >= 1080;
+  //const isPhone = width <= 768 && height <= 1024; // Typical phone breakpoints
+
+  //const blackoutElement = document.getElementById("blackout");
+
+  //if ((isFullscreenMonitor || isPhone) && document.hasFocus()) {
+    //blackoutElement.style.display = "none";
+  //} else {
+   // blackoutElement.style.display = "block";
+  //}
+//}
+
+//setTimeout(() => {
+//  checkResize();
+//}, 1000);
+
+//window.addEventListener('resize', checkResize);
+//window.addEventListener('focus', checkResize);
+//window.addEventListener('blur', checkResize);
+
 </script>
 </html>
