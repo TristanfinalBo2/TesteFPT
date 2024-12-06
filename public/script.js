@@ -215,7 +215,25 @@ document.addEventListener("DOMContentLoaded", () => {
         goToNextQuestion();
     }
 
+    let answeredLater = []; // Initialize the array to store skipped question indices
+
+    function handleAnswerLater() {
+        // Add the current question index to the answeredLater array if not already added
+        if (!answeredLater.includes(currentIndex)) {
+            answeredLater.push(currentIndex);
+        }
+        goToNextQuestion();
+    }
+    
     function goToNextQuestion() {
+        // If there are skipped questions, prioritize them
+        if (answeredLater.length > 0) {
+            currentIndex = answeredLater.shift(); // Get the first skipped question
+            renderQuestion(currentIndex);
+            return;
+        }
+    
+        // Move to the next question
         currentIndex++;
         if (currentIndex >= questions.length) {
             endTest("Felicitări! Ai promovat testul!", true);
@@ -223,6 +241,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         renderQuestion(currentIndex);
     }
+    
 
     
     function endTest(message, isPassed) {
@@ -253,7 +272,7 @@ document.addEventListener("DOMContentLoaded", () => {
     optionsContainer.addEventListener("click", handleOptionClick);
     document.querySelector(".clear-answer").addEventListener("click", handleClearAnswer);
     document.querySelector(".send-answer").addEventListener("click", handleSendAnswer);
-
+    document.querySelector(".answer-later").addEventListener("click", handleAnswerLater);
     questions = questions.sort(() => Math.random() - 0.5);
 
     questions = questions.map(q => {

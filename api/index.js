@@ -251,7 +251,7 @@ app.post('/send-test-result', (req, res) => {
     const futureDate = new Date();
 
     if (testType == "RADIO") {
-        futureDate.setDate(today.getDate() + 2);
+        futureDate.setDate(today.getDate() + 3);
     } else if (testType == "BLS") {
         futureDate.setDate(today.getDate() + 3);
     } else if (testType == "REZIDENTIAT") {
