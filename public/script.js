@@ -127,7 +127,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const distance = countDownDate - now;
     
             if (distance <= 0) {
-                clearInterval(timeInterval); // Stop the interval
+                clearInterval(timeInterval);
                 endTest("Timpul a expirat!", false);
                 return;
             }
@@ -255,7 +255,8 @@ document.addEventListener("DOMContentLoaded", () => {
             mistakes: userMistakes.length,
             mistakeQuestions: userMistakes, // Array complet cu întrebări greșite
             result: isPassed ? "ADMIS" : "RESPINS",
-            message: message
+            message: message,
+            remainingTime: remainingTime
         };
 
         // Trimite datele către serverul Express

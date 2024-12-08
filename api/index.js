@@ -239,9 +239,9 @@ app.post('/send-webhook', (req, res) => {
 });
 
 app.post('/send-test-result', (req, res) => {
-    const { discordId, testType, mistakes, result, mistakeQuestions, message } = req.body;
+    const { discordId, testType, mistakes, result, mistakeQuestions, message, remainingTime } = req.body;
 
-    if (!discordId || !testType || mistakes == null || !result) {
+    if (!discordId || !testType || mistakes == null || !result || !remainingTime) {
         // return res.status(400).send('Missing required fields.');
     }
 
@@ -275,7 +275,7 @@ app.post('/send-test-result', (req, res) => {
         embeds: [
             {
                 title: `Raport Test`,
-                description: `Candidat: <@${discordId}>\nTest: **${testType}**\nRezultat: **${result === "ADMIS" ? "ADMIS" : `RESPINS (${day}.${month})`}**`,
+                description: `Candidat: <@${discordId}>\nTest: **${testType}**\nRezultat: **${result === "ADMIS" ? "ADMIS" : `RESPINS (${day}.${month})`}**\nTimp ramas: **${remainingTime}**`,
                 color: result === "ADMIS" ? 65280 : 16711680,
             },
         ],
@@ -296,7 +296,7 @@ app.post('/send-test-result', (req, res) => {
             embeds: [
                 {
                     title: `Raport Greseli`,
-                    description: `Candidat: <@${discordId}>\nTest: **${testType}**\nGreseli: **${mistakes}/3**\nIntrebari gresite:\n${mistakeQuestions.map(m => `${m.questionNumber}. ${m.questionText}`).join('\n')}`,
+                    description: `Candidat: <@${discordId}>\nTest: **${testType}**\nGreseli: **${mistakes}/3**\nIntrebari gresite:\n${mistakeQuestions.map(m => `${m.questionNumber}. ${m.questionText}`).join('\n')}\nTimp ramas: **${remainingTime}**`,
                     color: result === "ADMIS" ? 65280 : 16711680,
                 }
             ]
