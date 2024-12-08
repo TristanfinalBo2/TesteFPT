@@ -238,6 +238,12 @@ app.post('/send-webhook', (req, res) => {
         });
 });
 
+function formatMilliseconds(ms) {
+    const minutes = Math.floor(ms / 60000); // 1 minute = 60000 ms
+    const seconds = Math.floor((ms % 60000) / 1000); // Get remaining seconds
+    return `${minutes}:${seconds.toString().padStart(2, '0')}`; // Pad seconds to 2 digits
+}
+
 app.post('/send-test-result', (req, res) => {
     const { discordId, testType, mistakes, result, mistakeQuestions, message, remainingTime } = req.body;
 
@@ -275,7 +281,7 @@ app.post('/send-test-result', (req, res) => {
         embeds: [
             {
                 title: `Raport Test`,
-                description: `Candidat: <@${discordId}>\nTest: **${testType}**\nRezultat: **${result === "ADMIS" ? "ADMIS" : `RESPINS (${day}.${month})`}**\nTimp ramas: **${remainingTime}**`,
+                description: `Candidat: <@${discordId}>\nTest: **${testType}**\nRezultat: **${result === "ADMIS" ? "ADMIS" : `RESPINS (${day}.${month})`}**`,
                 color: result === "ADMIS" ? 65280 : 16711680,
             },
         ],
@@ -296,7 +302,7 @@ app.post('/send-test-result', (req, res) => {
             embeds: [
                 {
                     title: `Raport Greseli`,
-                    description: `Candidat: <@${discordId}>\nTest: **${testType}**\nGreseli: **${mistakes}/3**\nIntrebari gresite:\n${mistakeQuestions.map(m => `${m.questionNumber}. ${m.questionText}`).join('\n')}\nTimp ramas: **${remainingTime}**`,
+                    description: `Candidat: <@${discordId}>\nTest: **${testType}**\nGreseli: **${mistakes}/3**\nIntrebari gresite:\n${mistakeQuestions.map(m => `${m.questionNumber}. ${m.questionText}`).join('\n')}\nTimp ramas: **${formatMilliseconds(remainingTime)}**`,
                     color: result === "ADMIS" ? 65280 : 16711680,
                 }
             ]
