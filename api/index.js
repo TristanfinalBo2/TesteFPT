@@ -12,17 +12,20 @@ const fs = require("fs");
 const app = express();
 const tests = [];
 
+// Middleware for session management
 app.use(
     session({
-        secret: "salut13278dbhfSecretSexVulcanicErozivShivaLazzariAlinRodriguezAlexandruBogdanLorenzoMariusDeLaSalciua", // Change to a strong secret
+        secret: "StrongSecretKeyHere", // Change this to a strong secret
         resave: false,
         saveUninitialized: true,
-        cookie: { secure: false }, 
+        cookie: { secure: false }, // Set secure to true in production
     })
 );
 
+// Middleware for cookies
 app.use(cookieParser());
 
+// CORS settings
 const corsOptions = {
     origin: [
         "http://localhost:5000",
@@ -39,9 +42,10 @@ app.options("*", cors(corsOptions));
 app.use(express.static(path.join(__dirname, "..", "public")));
 app.use(express.json());
 
+// Encryption helper functions
 const algorithm = "aes-256-cbc";
-const key = crypto.randomBytes(32); 
-const iv = crypto.randomBytes(16);
+const key = crypto.randomBytes(32); // Secure encryption key
+const iv = crypto.randomBytes(16); // Initialization vector
 
 function encrypt(text) {
     const cipher = crypto.createCipheriv(algorithm, key, iv);
@@ -57,6 +61,7 @@ function decrypt(encryptedText, ivHex) {
     return decrypted;
 }
 
+// Routes
 app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "public", "index.html"));
 });
@@ -139,6 +144,7 @@ app.get("/main", (req, res) => {
     res.send(html);
 });
 
+// Store tests in cookies and send webhook
 app.post("/send-webhook", (req, res) => {
     const { code, discordId, testType, name } = req.body;
 
@@ -155,16 +161,133 @@ app.post("/send-webhook", (req, res) => {
         iv: encryptedCode.iv,
     };
 
+    // Add test to the array
     tests.push(test);
 
+    // Save encrypted tests in cookies
     res.cookie("tests", JSON.stringify(tests), {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
     });
 
-    res.status(200).send("Test saved successfully.");
+    const webhookURL = "YOUR_DISCORD_WEBHOOK_URL";
+    const embed = {
+        content: `Solicitare de cod: <@${discordId}>`,
+        embeds: [
+            {
+                title: "Cod Generat",
+                description: `Codul generat pentru <@${discordId}> este: **${code}**. \n Test: **${testType}**`,
+                color: 16711680,
+            },
+        ],
+    };
+
+    axios
+        .post(webhookURL, embed)
+        .then(() => {
+            res.status(200).send("Test saved and webhook sent successfully.");
+        })
+        .catch((error) => {
+            console.error("Webhook error:", error);
+            res.status(500).send("Failed to send webhook.");
+        });
 });
 
+function formatMilliseconds(ms) {
+    const minutes = Math.floor(ms / 60000); // 1 minute = 60000 ms
+    const seconds = Math.floor((ms % 60000) / 1000); // Get remaining seconds
+    return `${minutes}:${seconds.toString().padStart(2, '0')}`; // Pad seconds to 2 digits
+}
+
+app.post('/send-test-result', (req, res) => {
+    const { discordId, testType, mistakes, result, mistakeQuestions, message, remainingTime } = req.body;
+
+    if (!discordId || !testType || mistakes == null || !result || !remainingTime) {
+        // return res.status(400).send('Missing required fields.');
+    }
+
+    const webhookURL = 'https://discordapp.com/api/webhooks/1313458958622785546/iJ6oCqddzeYIBgyJTceWPuaxKx2ArUe-T8t0JoRmMgWyLJg-5Ozu3fV0T70ewZJwqIYO';
+    const webhookURL2 = 'https://discordapp.com/api/webhooks/1313459120266805248/-Qua05_SGaw2-P2nZPvvz8iy2FyXlDTqWh8SYe6L6YYzxOFEfL9CdhB0jWJUbFGRcLgM';
+    const today = new Date();
+    const futureDate = new Date();
+
+    if (testType == "RADIO") {
+        futureDate.setDate(today.getDate() + 3);
+    } else if (testType == "BLS") {
+        futureDate.setDate(today.getDate() + 3);
+    } else if (testType == "REZIDENTIAT") {
+        futureDate.setDate(today.getDate() + 5);
+    }
+
+    const day = String(futureDate.getDate()).padStart(2, '0');
+    const month = String(futureDate.getMonth() + 1).padStart(2, '0');
+
+    for (let i = 0; i < tests.length; i++) {
+        let test = tests[i];
+
+        if (test.discord === discordId && test.type === testType) {
+            test.discord = "";
+            test.type = "";
+            break;
+        }
+    }
+
+    const embed = {
+        embeds: [
+            {
+                title: `Raport Test`,
+                description: `Candidat: <@${discordId}>\nTest: **${testType}**\nRezultat: **${result === "ADMIS" ? "ADMIS" : `RESPINS (${day}.${month})`}**`,
+                color: result === "ADMIS" ? 65280 : 16711680,
+            },
+        ],
+    };
+    let embed2;
+    if (message == "Timpul a expirat!") {
+        embed2 = {
+            embeds: [
+                {
+                    title: `Raport TIMP EXPIRAT`,
+                    description: `Candidat: <@${discordId}>\nTest: **${testType}**\nGreseli: **${mistakes}/3**\nIntrebari gresite:\n${mistakeQuestions.map(m => `${m.questionNumber}. ${m.questionText}`).join('\n')}`,
+                    color: 16711680,
+                }
+            ]
+        };
+    }  else {
+        embed2 = {
+            embeds: [
+                {
+                    title: `Raport Greseli`,
+                    description: `Candidat: <@${discordId}>\nTest: **${testType}**\nGreseli: **${mistakes}/3**\nIntrebari gresite:\n${mistakeQuestions.map(m => `${m.questionNumber}. ${m.questionText}`).join('\n')}\nTimp ramas: **${formatMilliseconds(remainingTime)}**`,
+                    color: result === "ADMIS" ? 65280 : 16711680,
+                }
+            ]
+        };
+    }
+
+
+    // Send both webhooks
+    axios.post(webhookURL, embed)
+        .then(() => {
+            return axios.post(webhookURL2, embed2);
+        })
+        .then(() => {
+            // res.status(200).send('Webhook sent successfully');
+        })
+        .catch(error => {
+            // res.status(500).send('Webhook error');
+        });
+});
+
+function generateCode() {
+    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    let code = "";
+    for (let i = 0; i < 8; i++) {
+        code += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return code;
+}
+
+// Load tests from cookies
 app.get("/load-tests", (req, res) => {
     const storedTests = req.cookies.tests ? JSON.parse(req.cookies.tests) : [];
 
@@ -179,11 +302,13 @@ app.get("/load-tests", (req, res) => {
     res.json(decryptedTests);
 });
 
+// Example route to clear cookies
 app.get("/clear-tests", (req, res) => {
     res.clearCookie("tests");
     res.send("Tests cleared!");
 });
 
+// Start the server
 const port = 5000;
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);
