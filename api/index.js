@@ -167,33 +167,31 @@ app.get("/test", (req, res) => {
 
     for (let i = 0; i < tests.length; i++) {
         const test = tests[i];
-
+        console.log(test.discord === discordId, test.type === testType, test.code === code)
+        console.log(test.discord, discordId)
+        console.log(test.type, testType)
+        console.log(test.code, code)
         if (test.discord === discordId && test.type === testType && test.code === code) {
             found = true;
 
-            // Set the necessary headers
             res.setHeader("X-Test-Type", testType);
             res.setHeader("X-Test-Code", code);
             res.setHeader("X-Test-Discord", discordId);
             res.setHeader("X-Test-Name", name);
 
-            // Read the HTML template
             const htmlPath = path.join(__dirname, "..", "public", "test.html");
             let html = fs.readFileSync(htmlPath, "utf-8");
 
-            // Replace placeholders in the HTML with the data from the session and query parameters
             html = html.replace("{{TEST_TYPE}}", testType)
                        .replace("{{TEST_CODE}}", code)
                        .replace("{{TEST_NAME}}", name)
                        .replace("{{TEST_DISCORD}}", discordId)
                        .replace("{{TEST_TYPE2}}", testType);
 
-            // Send the modified HTML to the client
             return res.send(html);
         }
     }
 
-    // If no matching test was found
     return res.status(200).send("Codul introdus nu este cel atribuit tie!");
 });
 
@@ -223,6 +221,7 @@ app.post('/send-webhook', (req, res) => {
         type: testType,
         code: code
     }
+    console.log(tData)
     tests.push(tData);
     
     axios.post(webhookURL, embed)
