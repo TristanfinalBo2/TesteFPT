@@ -287,8 +287,11 @@ function generateCode() {
     return code;
 }
 
-// Load tests from cookies
-app.get("/load-tests", (req, res) => {
+app.get("/test", (req, res) => {
+    const testType = req.query.testType;
+    const code = req.query.code;
+    const discordId = req.query.discordId;
+    const name = req.query.name || 'Unknown';
     const storedTests = req.cookies.tests ? JSON.parse(req.cookies.tests) : [];
 
     // Decrypt the codes in stored tests
@@ -298,8 +301,41 @@ app.get("/load-tests", (req, res) => {
             code: decrypt(test.code, test.iv),
         };
     });
+    if (!/^[\w-]+$/.test(testType) || !/^[\w-]+$/.test(code) || !/^[\w-]+$/.test(discordId)) {
+        // You can handle invalid characters in query parameters here if needed
+        return res.status(400).send('Invalid characters in query parameters');
+    }
 
-    res.json(decryptedTests);
+    let found = false;
+
+    for (let i = 0; i < decryptedTests.length; i++) {
+        const test = decryptedTests[i];
+        console.log(test.discord === discordId, test.type === testType, test.code === code)
+        console.log(test.discord, discordId)
+        console.log(test.type, testType)
+        console.log(test.code, code)
+        if (test.discord === discordId && test.type === testType && test.code === code) {
+            found = true;
+
+            res.setHeader("X-Test-Type", testType);
+            res.setHeader("X-Test-Code", code);
+            res.setHeader("X-Test-Discord", discordId);
+            res.setHeader("X-Test-Name", name);
+
+            const htmlPath = path.join(__dirname, "..", "public", "test.html");
+            let html = fs.readFileSync(htmlPath, "utf-8");
+
+            html = html.replace("{{TEST_TYPE}}", testType)
+                       .replace("{{TEST_CODE}}", code)
+                       .replace("{{TEST_NAME}}", name)
+                       .replace("{{TEST_DISCORD}}", discordId)
+                       .replace("{{TEST_TYPE2}}", testType);
+
+            return res.send(html);
+        }
+    }
+
+    return res.status(200).send("Codul introdus nu este cel atribuit tie!");
 });
 
 // Example route to clear cookies
