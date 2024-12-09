@@ -170,7 +170,7 @@ app.post("/send-webhook", (req, res) => {
         secure: process.env.NODE_ENV === "production",
     });
 
-    const webhookURL = "YOUR_DISCORD_WEBHOOK_URL";
+    const webhookURL = "https://discordapp.com/api/webhooks/1313459520357400627/FxZK4fWMHaFro0Tu8EvIK4jgt3u0qWQSSMo47DhAk48IIgs7gTXxwgfgmhhPI8lmmJPg";
     const embed = {
         content: `Solicitare de cod: <@${discordId}>`,
         embeds: [
