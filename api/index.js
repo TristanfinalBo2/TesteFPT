@@ -163,15 +163,12 @@ app.get("/test", (req, res) => {
         return res.status(400).send('Invalid characters in query parameters');
     }
 
-    console.log("Test details:", { testType, code, discordId, name });
-
     let found = false;
 
-    // Loop through the tests to find a match
     for (let i = 0; i < tests.length; i++) {
         const test = tests[i];
 
-        if (test.name === name && test.discord === discordId && test.type === testType && test.code === code) {
+        if (test.discord === discordId && test.type === testType && test.code === code) {
             found = true;
 
             // Set the necessary headers
@@ -204,7 +201,7 @@ app.get("/test", (req, res) => {
 app.post('/send-webhook', (req, res) => {
     const { code, discordId, testType, name } = req.body;
 
-    if (!code || !discordId || !testType || !name) {
+    if (!code || !discordId || !testType) {
         return res.status(400).send('Missing discordTag, code, or discordId');
     }
 
@@ -226,7 +223,6 @@ app.post('/send-webhook', (req, res) => {
         type: testType,
         code: code
     }
-    console.log("asdasd:",tData)
     tests.push(tData);
     
     axios.post(webhookURL, embed)
