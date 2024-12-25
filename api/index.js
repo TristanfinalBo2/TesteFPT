@@ -208,19 +208,27 @@ app.post('/send-test-result', (req, res) => {
 
     const webhookURL = 'https://discordapp.com/api/webhooks/1313458958622785546/iJ6oCqddzeYIBgyJTceWPuaxKx2ArUe-T8t0JoRmMgWyLJg-5Ozu3fV0T70ewZJwqIYO';
     const webhookURL2 = 'https://discordapp.com/api/webhooks/1313459120266805248/-Qua05_SGaw2-P2nZPvvz8iy2FyXlDTqWh8SYe6L6YYzxOFEfL9CdhB0jWJUbFGRcLgM';
-    const today = new Date();
-    const futureDate = new Date();
+const today = new Date();
+const futureDate = new Date(today); // Clone today's date
 
-    if (testType == "RADIO") {
-        futureDate.setDate(today.getDate() + 3);
-    } else if (testType == "BLS") {
-        futureDate.setDate(today.getDate() + 3);
-    } else if (testType == "REZIDENTIAT") {
-        futureDate.setDate(today.getDate() + 5);
-    }
+if (testType === "RADIO" || testType === "BLS") {
+    futureDate.setDate(today.getDate() + 3);
+} else if (testType === "REZIDENTIAT") {
+    futureDate.setDate(today.getDate() + 5);
+}
 
-    const day = String(futureDate.getDate()).padStart(2, '0');
-    const month = String(futureDate.getMonth() + 1).padStart(2, '0');
+// Format the date to account for Romania's timezone
+const formatter = new Intl.DateTimeFormat('ro-RO', {
+    timeZone: 'Europe/Bucharest',
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric'
+});
+
+// Extract day and month
+const [day, month] = formatter.format(futureDate).split('.');
+
+
 
     for (let i = 0; i < tests.length; i++) {
         let test = tests[i];
