@@ -146,7 +146,7 @@
 
     setInterval(() => {
         let sent = localStorage.getItem('sent') === "true";
-        cd = parseInt(localStorage.getItem('cd')) || 20000;
+        cd = parseInt(localStorage.getItem('cd')) || 60000;
         console.log(sent, cd)
         if (sent) {
             cd -= 1000;
@@ -154,7 +154,7 @@
         }
 
         if (cd <= 0) {
-            cd = 20000; // Reset cooldown
+            cd = 60000; // Reset cooldown
             localStorage.setItem('sent', 'false'); // Reset 'sent' status
             localStorage.setItem('cd', cd); // Reset countdown timer
         }
