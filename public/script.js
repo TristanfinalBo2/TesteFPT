@@ -67,15 +67,15 @@ document.addEventListener("DOMContentLoaded", () => {
     switch (testType) {
         case "RADIO":
             questions = radioQuestions;
-            time = 180000;
+            time = 220000;
             break;
         case "BLS":
             questions = blsQuestions;
-            time = 300000;
+            time = 310000;
             break;
         case "REZIDENTIAT":
             questions = rezidentiatQuestions;
-            time = 420000;
+            time = 430000;
             break;
         default:
             Toastify({
