@@ -58,6 +58,17 @@
         window.location.href = `/main?name=${encodeURIComponent(name)}&id=${encodeURIComponent(discordId)}`;
     }
 
+    window.addEventListener('beforeunload', function (event) {
+        const confirmationMessage = "Are you sure you want to leave this page?";
+        
+        event.returnValue = confirmationMessage;
+
+        console.log(confirmationMessage)
+
+        return confirmationMessage;
+    });
+
+
 //function checkResize() {
   //const width = window.innerWidth;
   //const height = window.innerHeight;
