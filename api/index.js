@@ -172,7 +172,6 @@ app.post("/send-webhook", (req, res) => {
 
     const webhookURL = "https://discordapp.com/api/webhooks/1313459520357400627/FxZK4fWMHaFro0Tu8EvIK4jgt3u0qWQSSMo47DhAk48IIgs7gTXxwgfgmhhPI8lmmJPg";
     const embed = {
-        content: `Solicitare de cod: <@${discordId}> | <@&1231601122523877417>`,
         embeds: [
             {
                 title: "Cod Generat",
