@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
         { question: "Cum se tratează o coastă ruptă în timpul unei intervenții chirurgicale?", options: ["Umplem fisurile cu oseina", "Montam placuta de titan"], correct: 1 },
         { question: "Ce instrument este folosit pentru a observa meniscul în timpul operației de ruptură a meniscului?", options: ["o cameră video mică", "Raze X", "RMN", "Poze cu telefonul"], correct: 0 },
         { question: "Ce substanță este utilizată pentru anestezia totală în operația de hernie de disc la nivelul vertebrei L4?", options: ["Propofol", "Xilina", "Atropina", "Paracetamol"], correct: 0 },
-        { question: "Ce instrument folosim pentru a observa fisuri  pe o coastă ruptă în timpul unei intervenții chirurgicale?", options: ["2 departatoare", "Port ac si fir de sutura", "Tija metalica", "Nimic"], correct: 0 },
+        { question: "Ce instrument folosim pentru a ajunge la fisura de pe o coasta in timpul unei operatii chirurgicale?", options: ["2 departatoare", "Port ac si fir de sutura", "Tija metalica", "Nimic"], correct: 0 },
         { question: "Care anestezie se foloseste in cazul unei operatii de indepartare a tatuajelor?", options: ["Nu se foloseste", "Anestezie locala", "Anestezie rahiala", "Anestezie totala"], correct: 0 },
         { question: "Ce substanță este injectată în coloana vertebrală pentru anestezia rahianestezică în operația de apendicită?", options: ["Tetracaina", "Morfina", "Calciu in perfuzie"], correct: 0 },
         { question: "Cum se tratează un tendon fisurat în timpul unei intervenții chirurgicale la nivelul umărului?", options: ["Suturam tendonul cu ajutorul unui port-ac si fir de sutura", "Capsator medicinal", "Lampa UV"], correct: 0 },
@@ -67,7 +67,7 @@ document.addEventListener("DOMContentLoaded", () => {
     switch (testType) {
         case "RADIO":
             questions = radioQuestions;
-            time = 180000;
+            time = 210000;
             break;
         case "BLS":
             questions = blsQuestions;

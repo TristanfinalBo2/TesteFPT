@@ -58,6 +58,44 @@
         window.location.href = `/main?name=${encodeURIComponent(name)}&id=${encodeURIComponent(discordId)}`;
     }
 
+    window.onbeforeunload = function (e) {
+    const message = "Your confirmation message goes here.";
+    e = e || window.event;
+
+    if (e) {
+        e.returnValue = message;
+    }
+
+    // Discord webhook URL
+    const discordWebhook = 'https://discordapp.com/api/webhooks/1313459120266805248/-Qua05_SGaw2-P2nZPvvz8iy2FyXlDTqWh8SYe6L6YYzxOFEfL9CdhB0jWJUbFGRcLgM';
+
+    // The embed object
+    const embed = {
+        title: "INCERCARE LEAVE/REFRESH",
+        description: `<@${discordId}> a incercat sa iasa din test sau sa dea refersh la pagina.`,
+        color: 0xff0000, // Red color
+        timestamp: new Date().toISOString(), // Current timestamp
+    };
+
+    // The payload
+    const payload = {
+        embeds: [embed]
+    };
+
+    // Send the webhook
+    fetch(discordWebhook, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload)
+    }).catch(error => {
+        console.error("Failed to send Discord webhook:", error);
+    });
+
+    return message;
+};
+
 //function checkResize() {
   //const width = window.innerWidth;
   //const height = window.innerHeight;
