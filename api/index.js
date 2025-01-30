@@ -8,29 +8,24 @@ const session = require("express-session");
 const cookieParser = require("cookie-parser");
 const crypto = require("crypto");
 const fs = require("fs");
-const rateLimit = require("express-rate-limit");
 
 const app = express();
 const tests = [];
 
-const limiter = rateLimit({
-    windowMs: 1 * 60 * 1000, 
-    max: 3, 
-    message: "Too many requests, please try again later."
-});
-app.use("/send-webhook", limiter);
-
+// Middleware for session management
 app.use(
     session({
-        secret: "StrongSecretKeyHere",
+        secret: "StrongSecretKeyHere", // Change this to a strong secret
         resave: false,
         saveUninitialized: true,
-        cookie: { secure: process.env.NODE_ENV === "production" },
+        cookie: { secure: false }, // Set secure to true in production
     })
 );
 
+// Middleware for cookies
 app.use(cookieParser());
 
+// CORS settings
 const corsOptions = {
     origin: [
         "http://localhost:5000",
@@ -40,6 +35,7 @@ const corsOptions = {
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     allowedHeaders: ["Content-Type", "Authorization"],
 };
+
 app.use(cors(corsOptions));
 app.options("*", cors(corsOptions));
 
@@ -148,28 +144,7 @@ app.get("/main", (req, res) => {
     res.send(html);
 });
 
-function encrypt(text) {
-    const cipher = crypto.createCipheriv(algorithm, key, iv);
-    let encrypted = cipher.update(text, "utf8", "hex");
-    encrypted += cipher.final("hex");
-    return { encryptedData: encrypted, iv: iv.toString("hex") };
-}
-
-function decrypt(encryptedText, ivHex) {
-    const decipher = crypto.createDecipheriv(algorithm, key, Buffer.from(ivHex, "hex"));
-    let decrypted = decipher.update(encryptedText, "hex", "utf8");
-    decrypted += decipher.final("utf8");
-    return decrypted;
-}
-
-app.use((req, res, next) => {
-    const apiKey = req.headers["x-api-key"];
-    if (!apiKey || apiKey !== process.env.SECURE_API_KEY) {
-        return res.status(403).json({ error: "Unauthorized access" });
-    }
-    next();
-});
-
+// Store tests in cookies and send webhook
 app.post("/send-webhook", (req, res) => {
     if (!req.session.user) {
         const htmlPath = path.join(__dirname, "..", "public", "index.html");
@@ -177,7 +152,6 @@ app.post("/send-webhook", (req, res) => {
         res.send(html);
         return;
     }
-
     const { code, discordId, testType, name } = req.body;
 
     if (!code || !discordId || !testType) {
@@ -193,8 +167,10 @@ app.post("/send-webhook", (req, res) => {
         iv: encryptedCode.iv,
     };
 
+    // Add test to the array
     tests.push(test);
 
+    // Save encrypted tests in cookies
     res.cookie("tests", JSON.stringify(tests), {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
@@ -223,7 +199,6 @@ app.post("/send-webhook", (req, res) => {
         });
 });
 
-
 function formatMilliseconds(ms) {
     const minutes = Math.floor(ms / 60000); // 1 minute = 60000 ms
     const seconds = Math.floor((ms % 60000) / 1000); // Get remaining seconds
@@ -240,28 +215,32 @@ app.post('/send-test-result', (req, res) => {
     const { discordId, testType, mistakes, result, mistakeQuestions, message, remainingTime } = req.body;
 
     if (!discordId || !testType || mistakes == null || !result || !remainingTime) {
-        return res.status(400).send('Missing required fields.');
+        // return res.status(400).send('Missing required fields.');
     }
 
     const webhookURL = 'https://discordapp.com/api/webhooks/1313458958622785546/iJ6oCqddzeYIBgyJTceWPuaxKx2ArUe-T8t0JoRmMgWyLJg-5Ozu3fV0T70ewZJwqIYO';
     const webhookURL2 = 'https://discordapp.com/api/webhooks/1313459120266805248/-Qua05_SGaw2-P2nZPvvz8iy2FyXlDTqWh8SYe6L6YYzxOFEfL9CdhB0jWJUbFGRcLgM';
-    const today = new Date();
-    const futureDate = new Date(today); // Clone today's date
+const today = new Date();
+const futureDate = new Date(today); // Clone today's date
 
-    if (testType === "RADIO" || testType === "BLS") {
-        futureDate.setDate(today.getDate() + 3);
-    } else if (testType === "REZIDENTIAT") {
-        futureDate.setDate(today.getDate() + 5);
-    }
+if (testType === "RADIO" || testType === "BLS") {
+    futureDate.setDate(today.getDate() + 3);
+} else if (testType === "REZIDENTIAT") {
+    futureDate.setDate(today.getDate() + 5);
+}
 
-    const formatter = new Intl.DateTimeFormat('ro-RO', {
-        timeZone: 'Europe/Bucharest',
-        day: '2-digit',
-        month: '2-digit',
-        year: 'numeric'
-    });
+// Format the date to account for Romania's timezone
+const formatter = new Intl.DateTimeFormat('ro-RO', {
+    timeZone: 'Europe/Bucharest',
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric'
+});
 
-    const [day, month] = formatter.format(futureDate).split('.');
+// Extract day and month
+const [day, month] = formatter.format(futureDate).split('.');
+
+
 
     for (let i = 0; i < tests.length; i++) {
         let test = tests[i];
@@ -305,6 +284,8 @@ app.post('/send-test-result', (req, res) => {
         };
     }
 
+
+    // Send both webhooks
     axios.post(webhookURL, embed)
         .then(() => {
             return axios.post(webhookURL2, embed2);
@@ -339,6 +320,7 @@ app.get("/test", (req, res) => {
     const name = req.query.name || 'Unknown';
     const storedTests = req.cookies.tests ? JSON.parse(req.cookies.tests) : [];
 
+    // Decrypt the codes in stored tests
     const decryptedTests = storedTests.map((test) => {
         return {
             ...test,
@@ -346,6 +328,7 @@ app.get("/test", (req, res) => {
         };
     });
     if (!/^[\w-]+$/.test(testType) || !/^[\w-]+$/.test(code) || !/^[\w-]+$/.test(discordId)) {
+        // You can handle invalid characters in query parameters here if needed
         return res.status(400).send('Invalid characters in query parameters');
     }
 
@@ -381,11 +364,13 @@ app.get("/test", (req, res) => {
     return res.status(200).send("Codul introdus nu este cel atribuit tie!");
 });
 
+// Example route to clear cookies
 app.get("/clear-tests", (req, res) => {
     res.clearCookie("tests");
     res.send("Tests cleared!");
 });
 
+// Start the server
 const port = 5000;
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);
