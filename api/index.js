@@ -374,4 +374,4 @@ app.get("/clear-tests", (req, res) => {
 const port = 5000;
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);
-});
+})
