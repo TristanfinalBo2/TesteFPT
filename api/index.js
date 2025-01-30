@@ -172,7 +172,7 @@ app.post("/send-webhook", (req, res) => {
 
     const webhookURL = "";
     const embed = {
-        content: `Solicitare de cod: <@${discordId}> | <@&1231601122523877417>`,
+        content: `Solicitare de cod: <@${discordId}>`,
         embeds: [
             {
                 title: "Cod Generat",
