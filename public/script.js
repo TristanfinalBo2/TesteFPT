@@ -248,7 +248,10 @@ document.addEventListener("DOMContentLoaded", () => {
         document.querySelector(".test-wrapper").style.display = "none";
         resultElement.style.display = "flex";
         resultElement.querySelector("span").textContent = message;
-
+        const now = new Date().getTime();
+        const distance = countDownDate - now;
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
         const resultData = {
             discordId: discordId,
             testType: testType,
@@ -256,7 +259,7 @@ document.addEventListener("DOMContentLoaded", () => {
             mistakeQuestions: userMistakes, // Array complet cu întrebări greșite
             result: isPassed ? "ADMIS" : "RESPINS",
             message: message,
-            remainingTime: remainingTime
+            remainingTime: minutes+":"+seconds
         };
 
         // Trimite datele către serverul Express
