@@ -29,7 +29,6 @@ app.use(cookieParser());
 const corsOptions = {
     origin: [
         "http://localhost:5000",
-        "https://teste-medici.vercel.app",
         "https://teste-medici-fplayt.vercel.app",
     ],
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
@@ -68,7 +67,7 @@ app.get("/", (req, res) => {
 
 app.get("/login/discord", (req, res) => {
     const redirectUri = process.env.VERCEL_URL
-        ? `https://teste-medici.vercel.app/auth/discord`
+        ? `http://localhost:5000/auth/discord`
         : `http://localhost:${port}/auth/discord`;
     const discordAuthUrl = `https://discord.com/oauth2/authorize?client_id=${clientId}&response_type=code&redirect_uri=${encodeURIComponent(redirectUri)}&scope=email+identify+guilds`;
     res.redirect(discordAuthUrl);
@@ -82,7 +81,7 @@ app.get("/auth/discord", async (req, res) => {
     }
 
     const redirectUri = process.env.VERCEL_URL
-        ? `https://teste-medici.vercel.app/auth/discord`
+        ? `http://localhost:5000/auth/discord`
         : `http://localhost:${port}/auth/discord`;
 
     try {
@@ -128,6 +127,7 @@ app.get("/auth/discord", async (req, res) => {
 });
 
 app.get("/main", (req, res) => {
+    console.log(req.session.user)
     if (!req.session.user) {
         const htmlPath = path.join(__dirname, "..", "public", "index.html");
         let html = fs.readFileSync(htmlPath, "utf-8");
@@ -144,7 +144,6 @@ app.get("/main", (req, res) => {
     res.send(html);
 });
 
-// Store tests in cookies and send webhook
 app.post("/send-webhook", (req, res) => {
     if (!req.session.user) {
         const htmlPath = path.join(__dirname, "..", "public", "index.html");
@@ -336,10 +335,6 @@ app.get("/test", (req, res) => {
 
     for (let i = 0; i < decryptedTests.length; i++) {
         const test = decryptedTests[i];
-        console.log(test.discord === discordId, test.type === testType, test.code === code)
-        console.log(test.discord, discordId)
-        console.log(test.type, testType)
-        console.log(test.code, code)
         if (test.discord === discordId && test.type === testType && test.code === code) {
             found = true;
 

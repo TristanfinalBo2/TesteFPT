@@ -140,11 +140,11 @@ document.addEventListener("DOMContentLoaded", () => {
     
     function stopInterval() {
         clearInterval(timeInterval);
-        remainingTime = countDownDate - new Date().getTime(); // Save remaining time
+        remainingTime = countDownDate - new Date().getTime();
     }
     
     function resumeInterval() {
-        countDownDate = new Date().getTime() + remainingTime; // Adjust the countdown date
+        countDownDate = new Date().getTime() + remainingTime;
         startInterval(); // Restart the interval
     }
 
@@ -202,7 +202,7 @@ document.addEventListener("DOMContentLoaded", () => {
             mistakesCountElement.textContent = `${mistakes}/3`;
     
             userMistakes.push({
-                questionNumber: currentIndex + 1, // Indexul întrebării (+1 pentru a începe de la 1)
+                questionNumber: currentIndex + 1,
                 questionText: questions[currentIndex].question,
             });
     
@@ -215,10 +215,9 @@ document.addEventListener("DOMContentLoaded", () => {
         goToNextQuestion();
     }
 
-    let answeredLater = []; // Initialize the array to store skipped question indices
+    let answeredLater = [];
 
     function handleAnswerLater() {
-        // Add the current question index to the answeredLater array if not already added
         if (!answeredLater.includes(currentIndex)) {
             answeredLater.push(currentIndex);
         }
@@ -226,14 +225,12 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     
     function goToNextQuestion() {
-        // If there are skipped questions, prioritize them
         if (answeredLater.length > 0) {
-            currentIndex = answeredLater.shift(); // Get the first skipped question
+            currentIndex = answeredLater.shift(); 
             renderQuestion(currentIndex);
             return;
         }
     
-        // Move to the next question
         currentIndex++;
         if (currentIndex >= questions.length) {
             endTest("Felicitări! Ai promovat testul!", true);
