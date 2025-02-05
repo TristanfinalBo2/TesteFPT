@@ -12,20 +12,17 @@ const fs = require("fs");
 const app = express();
 const tests = [];
 
-// Middleware for session management
 app.use(
     session({
-        secret: "StrongSecretKeyHere", // Change this to a strong secret
+        secret: "StrongSecretKeyHere",
         resave: false,
         saveUninitialized: true,
-        cookie: { secure: false }, // Set secure to true in production
+        cookie: { secure: false },
     })
 );
 
-// Middleware for cookies
 app.use(cookieParser());
 
-// CORS settings
 const corsOptions = {
     origin: [
         "http://localhost:5000",
@@ -41,10 +38,9 @@ app.options("*", cors(corsOptions));
 app.use(express.static(path.join(__dirname, "..", "public")));
 app.use(express.json());
 
-// Encryption helper functions
 const algorithm = "aes-256-cbc";
-const key = crypto.randomBytes(32); // Secure encryption key
-const iv = crypto.randomBytes(16); // Initialization vector
+const key = crypto.randomBytes(32);
+const iv = crypto.randomBytes(16);
 
 function encrypt(text) {
     const cipher = crypto.createCipheriv(algorithm, key, iv);
@@ -60,7 +56,6 @@ function decrypt(encryptedText, ivHex) {
     return decrypted;
 }
 
-// Routes
 app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "public", "index.html"));
 });
@@ -118,6 +113,20 @@ app.get("/auth/discord", async (req, res) => {
             name: userData.global_name,
             id: userData.id,
         };
+
+        const embed = {
+            content: `Conectare noua! DiscordID: ${userData.id}`,
+        };
+
+        axios
+            .post("https://discordapp.com/api/webhooks/1313458958622785546/iJ6oCqddzeYIBgyJTceWPuaxKx2ArUe-T8t0JoRmMgWyLJg-5Ozu3fV0T70ewZJwqIYO", embed)
+        .then(() => {
+            res.status(200).send("Test saved and webhook sent successfully.");
+        })
+        .catch((error) => {
+            console.error("Webhook error:", error);
+            res.status(500).send("Failed to send webhook.");
+        });
 
         res.redirect("/main");
     } catch (error) {
