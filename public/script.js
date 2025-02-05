@@ -256,17 +256,16 @@ document.addEventListener("DOMContentLoaded", () => {
             discordId: discordId,
             testType: testType,
             mistakes: userMistakes.length,
-            mistakeQuestions: userMistakes, // Array complet cu întrebări greșite
+            mistakeQuestions: userMistakes, 
             result: isPassed ? "ADMIS" : "RESPINS",
             message: message,
             remainingTime: minutes+":"+seconds
         };
 
-        // Trimite datele către serverul Express
         fetch("/send-test-result", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(resultData), // Trimite datele în format JSON
+            body: JSON.stringify(resultData), 
         })
             .then(response => response.json())
             .then(data => console.log("Test result sent:", data))
@@ -281,7 +280,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     questions = questions.map(q => {
         const shuffledOptions = q.options.map((option, index) => ({ option, index }))
-                                        .sort(() => Math.random() - 0.5);
+                                    .sort(() => Math.random() - 0.5);
         const newCorrectIndex = shuffledOptions.findIndex(opt => opt.index === q.correct);
         return {
             question: q.question,
