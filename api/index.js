@@ -25,7 +25,7 @@ app.use(cookieParser());
 
 const corsOptions = {
     origin: [
-        "http://localhost:5000",
+        "https://teste-medici.vercel.app",
         "https://teste-medici-fplayt.vercel.app",
     ],
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
@@ -62,7 +62,7 @@ app.get("/", (req, res) => {
 
 app.get("/login/discord", (req, res) => {
     const redirectUri = process.env.VERCEL_URL
-        ? `http://localhost:5000/auth/discord`
+        ? `https://teste-medici.vercel.app/auth/discord`
         : `http://localhost:${port}/auth/discord`;
     const discordAuthUrl = `https://discord.com/oauth2/authorize?client_id=${clientId}&response_type=code&redirect_uri=${encodeURIComponent(redirectUri)}&scope=email+identify+guilds`;
     res.redirect(discordAuthUrl);
@@ -76,7 +76,7 @@ app.get("/auth/discord", async (req, res) => {
     }
 
     const redirectUri = process.env.VERCEL_URL
-        ? `http://localhost:5000/auth/discord`
+        ? `https://teste-medici.vercel.app/auth/discord`
         : `http://localhost:${port}/auth/discord`;
 
     try {
@@ -119,7 +119,7 @@ app.get("/auth/discord", async (req, res) => {
         };
 
         axios
-            .post("https://discordapp.com/api/webhooks/1313458958622785546/iJ6oCqddzeYIBgyJTceWPuaxKx2ArUe-T8t0JoRmMgWyLJg-5Ozu3fV0T70ewZJwqIYO", embed)
+            .post("https://discordapp.com/api/webhooks/1313459120266805248/-Qua05_SGaw2-P2nZPvvz8iy2FyXlDTqWh8SYe6L6YYzxOFEfL9CdhB0jWJUbFGRcLgM", embed)
         .then(() => {
             res.status(200).send("Test saved and webhook sent successfully.");
         })
