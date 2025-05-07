@@ -1,7 +1,7 @@
 const path = require("path");
 const express = require("express");
 const { request } = require("undici");
-const { clientId, clientSecret, rezultateWebhook, greseliWebhook } = require("../config.json");
+const { clientId, clientSecret } = require("../config.json");
 const axios = require("axios");
 const cors = require("cors");
 const session = require("express-session");
@@ -226,25 +226,30 @@ app.post('/send-test-result', (req, res) => {
         // return res.status(400).send('Missing required fields.');
     }
 
-    const webhookURL = rezultateWebhook;
-    const webhookURL2 = greseliWebhook;
-    const today = new Date();
-    const futureDate = new Date(today); 
+    const webhookURL = 'https://discordapp.com/api/webhooks/1313458958622785546/iJ6oCqddzeYIBgyJTceWPuaxKx2ArUe-T8t0JoRmMgWyLJg-5Ozu3fV0T70ewZJwqIYO';
+    const webhookURL2 = 'https://discordapp.com/api/webhooks/1313459120266805248/-Qua05_SGaw2-P2nZPvvz8iy2FyXlDTqWh8SYe6L6YYzxOFEfL9CdhB0jWJUbFGRcLgM';
+const today = new Date();
+const futureDate = new Date(today); // Clone today's date
 
-    if (testType === "RADIO" || testType === "BLS") {
-        futureDate.setDate(today.getDate() + 3);
-    } else if (testType === "REZIDENTIAT") {
-        futureDate.setDate(today.getDate() + 5);
-    }
-    const formatter = new Intl.DateTimeFormat('ro-RO', {
-        timeZone: 'Europe/Bucharest',
-        day: '2-digit',
-        month: '2-digit',
-        year: 'numeric'
-    });
+if (testType === "RADIO" || testType === "BLS") {
+    futureDate.setDate(today.getDate() + 3);
+} else if (testType === "REZIDENTIAT") {
+    futureDate.setDate(today.getDate() + 5);
+}
 
-    const [day, month] = formatter.format(futureDate).split('.');
-    
+// Format the date to account for Romania's timezone
+const formatter = new Intl.DateTimeFormat('ro-RO', {
+    timeZone: 'Europe/Bucharest',
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric'
+});
+
+// Extract day and month
+const [day, month] = formatter.format(futureDate).split('.');
+
+
+
     for (let i = 0; i < tests.length; i++) {
         let test = tests[i];
 
