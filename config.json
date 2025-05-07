@@ -1,4 +1,6 @@
 {
     "clientId": "1310191380907167797",
-    "clientSecret": "dz-I9qhhBgkKtCvZ_cvacwZyNu2ZOEBB"
+    "clientSecret": "dz-I9qhhBgkKtCvZ_cvacwZyNu2ZOEBB",
+    "rezultateWebhook": "https://discord.com/api/webhooks/1313458958622785546/iJ6oCqddzeYIBgyJTceWPuaxKx2ArUe-T8t0JoRmMgWyLJg-5Ozu3fV0T70ewZJwqIYO",
+    "greseliWebhook": "https://discordapp.com/api/webhooks/1345077422122471465/Cl3O7zUi2-oZYGgvUQF9QRmDIm2iyGaqNbts1nf5QUhmPLIlWqyKiIDBk6ini1j7sGm7"
 }

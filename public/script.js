@@ -239,8 +239,6 @@ document.addEventListener("DOMContentLoaded", () => {
         renderQuestion(currentIndex);
     }
     
-
-    
     function endTest(message, isPassed) {
         document.querySelector(".test-wrapper").style.display = "none";
         resultElement.style.display = "flex";
