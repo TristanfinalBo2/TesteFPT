@@ -208,8 +208,8 @@ app.post("/send-webhook", (req, res) => {
 });
 
 function formatMilliseconds(ms) {
-    const minutes = Math.floor(ms / 60000); // 1 minute = 60000 ms
-    const seconds = Math.floor((ms % 60000) / 1000); // Get remaining seconds
+    const minutes = Math.floor(ms / 60); // 1 minute = 60000 ms
+    const seconds = Math.floor((ms % 60) / 1000); // Get remaining seconds
     return `${minutes}:${seconds.toString().padStart(2, '0')}`; // Pad seconds to 2 digits
 }
 
