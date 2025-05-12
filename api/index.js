@@ -184,7 +184,7 @@ app.post("/send-webhook", (req, res) => {
         secure: process.env.NODE_ENV === "production",
     });
 
-    const webhookURL = "https://discordapp.com/api/webhooks/1313459520357400627/FxZK4fWMHaFro0Tu8EvIK4jgt3u0qWQSSMo47DhAk48IIgs7gTXxwgfgmhhPI8lmmJPg";
+    const webhookURL = "https://discord.com/api/webhooks/1229451562649391104/jkau0MOI4o6SHmgvERblqRiUMrQCSM_qlV-WBnimdEeGGqgbYQ0EVKBUgvhY6c_bJmrg";
     const embed = {
         content: `Solicitare de cod: <@${discordId}> | <@&1231601122523877417>`,
         embeds: [
@@ -226,8 +226,8 @@ app.post('/send-test-result', (req, res) => {
         // return res.status(400).send('Missing required fields.');
     }
 
-    const webhookURL = 'https://discordapp.com/api/webhooks/1313458958622785546/iJ6oCqddzeYIBgyJTceWPuaxKx2ArUe-T8t0JoRmMgWyLJg-5Ozu3fV0T70ewZJwqIYO';
-    const webhookURL2 = 'https://discordapp.com/api/webhooks/1313459120266805248/-Qua05_SGaw2-P2nZPvvz8iy2FyXlDTqWh8SYe6L6YYzxOFEfL9CdhB0jWJUbFGRcLgM';
+    const webhookURL = 'https://discord.com/api/webhooks/1229451562649391104/jkau0MOI4o6SHmgvERblqRiUMrQCSM_qlV-WBnimdEeGGqgbYQ0EVKBUgvhY6c_bJmrg';
+    const webhookURL2 = 'https://discord.com/api/webhooks/1229451562649391104/jkau0MOI4o6SHmgvERblqRiUMrQCSM_qlV-WBnimdEeGGqgbYQ0EVKBUgvhY6c_bJmrg';
 const today = new Date();
 const futureDate = new Date(today); // Clone today's date
 
